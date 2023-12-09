@@ -12,7 +12,6 @@ width: 100%;
 padding-left: 9%;
 padding-right: 9%;
 display: flex;
-background-color:rgba(242, 248, 247, 1);
 /* padding-bottom: 4%; */
 
 }
@@ -187,6 +186,7 @@ rgba(0, 170, 161, 1);
 }
 .sec-2-right{
   width: 31%;
+  margin-top: 300px;
 }
 
 .blog-card{

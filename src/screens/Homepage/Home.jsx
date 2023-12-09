@@ -360,7 +360,9 @@ function Home() {
           </div>
         </section>
         <section className="right-section">
-          <div className="right-blog">
+          <div className="right-blog" style={{
+            marginBottom:"30px"
+          }}>
             <h3 className="featured">
               <span className="backgroundColor">&nbsp;Popular </span>
               &nbsp;Posted

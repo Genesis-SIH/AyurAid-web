@@ -69,7 +69,7 @@ const Login = () => {
           <img src={ayur} className="image" alt="Ayur Image" />
         </div>
       </div>
-      <div className="container" style={gradientStyle}></div>
+      <div className="container1" style={gradientStyle}></div>
       <div className={`modal ${isOpened ? "is-open" : ""}`}>
         <div class="modal-container">
           <div class="modal-left">

@@ -8,7 +8,7 @@ import { IconContext } from 'react-icons';
 import { ImCross } from "react-icons/im"
 import image from "../../assets/test.jpg"
 import { LoginContext } from '../../utils/contextProvider/Context';
-import logo from "../../assets/travelbrain-logo.svg"
+import logo from "../../assets/ayuraid.png"
 import defaultimage from "../../assets/defaultprofile.png"
 import axios from "axios"
 function Navbar(props) {
@@ -55,7 +55,7 @@ function Navbar(props) {
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
           <a href='/'>
-            <img className='logo' src={logo} alt="" />
+            <img className='logo' src={logo} alt=""  height={200} width={500}/>
           </a>
         </div>
         <div>
