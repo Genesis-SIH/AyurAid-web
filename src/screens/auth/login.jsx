@@ -4,9 +4,31 @@ import { Colors } from "../../utils";
 import AppText from "../../components/AppText";
 import TypingAnimation from "../../components/TypingAnimation";
 import ayur from "../../assets/ayur.png";
+import { loginUser } from "../../apis/users";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigation=useNavigate();
   const [isOpened, setIsOpened] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const submit = async () => {
+    try {
+      const data={
+        identity: email,
+        password: password,
+      }
 
+      console.log(data)
+      const res = await loginUser(data);
+      console.log(res.data.data.token);
+      localStorage.setItem("JWTFINALTOKEN", res.data.data.token);
+      if (res.status ===201 ) {
+        navigation('/')
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const gradientStyle = {
     background: `linear-gradient(to top, ${Colors.darkGreen},${Colors.colorBlack},${Colors.darkGreen})`,
     minHeight: "100%",
@@ -53,7 +75,7 @@ const Login = () => {
             style={{
               paddingBottom: "50px",
               paddingLeft: "30px",
-              paddingTop: "50px"
+              paddingTop: "50px",
             }}
           >
             AyurAid
@@ -79,7 +101,13 @@ const Login = () => {
               <label for="email" className="input-label">
                 Email
               </label>
-              <input type="email" name="email" id="email" placeholder="Email" />
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Email"
+                onChange={(e)=>setEmail(e.target.value)}
+              />
             </div>
             <div className="input-block">
               <label for="password" className="input-label">
@@ -90,13 +118,14 @@ const Login = () => {
                 name="password"
                 id="password"
                 placeholder="Password"
+                onChange={(e)=>setPassword(e.target.value)}
               />
             </div>
             <div className="modal-buttons">
               <a href="" className="">
                 Forgot your password?
               </a>
-              <button className="input-button">Login</button>
+              <button className="input-button" onClick={submit}>Login</button>
             </div>
             <p className="sign-up">
               Don't have an account? <a href="#">Sign up now</a>

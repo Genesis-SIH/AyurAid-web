@@ -11,7 +11,7 @@ import {
 import { AiOutlineInstagram } from "react-icons/ai";
 import { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { LoginContext } from '../../utils/contextProvider/Context';
+import { LoginContext } from "../../utils/contextProvider/Context";
 import { useNavigate } from "react-router-dom";
 import loadingAnimation from "../../assets/loading.gif";
 import axios from "axios";
@@ -23,9 +23,11 @@ function ShortBlogs(props) {
   const [blogs, setBlogs] = useState([]);
 
   const getBlogs = async () => {
-    const res = await getAllBlogs();
-    console.log(res.data)
-    setBlogs(res.data);
+    const token=localStorage.getItem('JWTFINALTOKEN');
+
+    const res = await getAllBlogs(token);
+    console.log(res.data.data.allBlogs);
+    setBlogs(res.data.data.allBlogs);
   };
   useEffect(() => {
     getBlogs();
@@ -106,75 +108,73 @@ function ShortBlogs(props) {
     </>
   );
 }
-function PopularAuthors(props) {
-  const [farhanProf, setFarhanProf] = useState("");
-  const farhan = async () => {
-    const res = await getUserById("6356398360be867515164b63");
-    setFarhanProf(res.data.success);
-  };
-  useEffect(() => {
-    farhan();
-  }, []);
-  return (
-    <>
-      <a href={`/profile/${farhanProf._id}`}>
-        <div className="profile mb-5">
-          <img className="top-author" src={farhanProf.profilePic} alt="" />
-          <div className="author-info">
-            <h4 className="authorName">{farhanProf.username}</h4>
-            <h5 className="designation">
-              {farhanProf.bio?.slice(0, 60) + "..."}
-            </h5>
-            <div className="authorSocials">
-              <a href={farhanProf.facebook} target="_blanck">
-                <TiSocialFacebook className="social-icons" />
-              </a>
-              <a href={farhanProf.linkedin} target="_blanck">
-                <TiSocialLinkedin className="social-icons" />
-              </a>
-              <a href={farhanProf.twitter} target="_blanck">
-                <TiSocialTwitter className="social-icons" />
-              </a>
-              <a href={farhanProf.instagram} target="_blanck">
-                <AiOutlineInstagram className="social-icons" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </a>
-    </>
-  );
-}
+// function PopularAuthors(props) {
+//   const [farhanProf, setFarhanProf] = useState("");
+//   const farhan = async () => {
+//     const res = await getUserById("6356398360be867515164b63");
+//     setFarhanProf(res.data.success);
+//   };
+//   useEffect(() => {
+//     farhan();
+//   }, []);
+//   return (
+//     <>
+//       <a href={`/profile/${farhanProf._id}`}>
+//         <div className="profile mb-5">
+//           <img className="top-author" src={farhanProf.profilePic} alt="" />
+//           <div className="author-info">
+//             <h4 className="authorName">{farhanProf.username}</h4>
+//             <h5 className="designation">
+//               {farhanProf.bio?.slice(0, 60) + "..."}
+//             </h5>
+//             <div className="authorSocials">
+//               <a href={farhanProf.facebook} target="_blanck">
+//                 <TiSocialFacebook className="social-icons" />
+//               </a>
+//               <a href={farhanProf.linkedin} target="_blanck">
+//                 <TiSocialLinkedin className="social-icons" />
+//               </a>
+//               <a href={farhanProf.twitter} target="_blanck">
+//                 <TiSocialTwitter className="social-icons" />
+//               </a>
+//               <a href={farhanProf.instagram} target="_blanck">
+//                 <AiOutlineInstagram className="social-icons" />
+//               </a>
+//             </div>
+//           </div>
+//         </div>
+//       </a>
+//     </>
+//   );
+// }
 export function RightSection() {
   const [totalUsers, setTotalUsers] = useState("");
   const [totalBlogs, setTotalBlogs] = useState("");
   const [catCount, setCatCount] = useState(0);
-  const userCount = async () => {
-    let res = await usersCount();
-    setTotalUsers(res.data.count);
-  };
-  const blogCount = async () => {
-    let res = await blogsCount();
-    setTotalBlogs(res.data.count);
-  };
-  const categoriesCount = async () => {
-    const res = await categoryCount();
-    setCatCount(res.data);
-  };
-  useEffect(() => {
-    userCount();
-    blogCount();
-    categoriesCount();
-  }, []);
+  // const userCount = async () => {
+  //   let res = await usersCount();
+  //   setTotalUsers(res.data.count);
+  // };
+  // const blogCount = async () => {
+  //   let res = await blogsCount();
+  //   setTotalBlogs(res.data.count);
+  // };
+  // const categoriesCount = async () => {
+  //   const res = await categoryCount();
+  //   setCatCount(res.data);
+  // };
+  // useEffect(() => {
+  //   userCount();
+  //   blogCount();
+  //   categoriesCount();
+  // }, []);
   return (
     <>
       <div className="sec-2-right">
         <h3 className="featured mb-5">
           <span className="backgroundColor">&nbsp;Top &nbsp;</span>&nbsp;Author
         </h3>
-        <PopularAuthors />
-        <PopularAuthors />
-        <PopularAuthors />
+       
 
         <div className="ad text-center center">
           <p className="ad-title">Ad</p>
@@ -294,41 +294,28 @@ function Home() {
   const pageRoute = useNavigate();
   const [totalUsers, setTotalUsers] = useState("");
   const [totalBlogs, setTotalBlogs] = useState("");
-  const userCount = async () => {
-    let res = await usersCount();
-    setTotalUsers(res.data.count);
-  };
-  const blogCount = async () => {
-    let res = await blogsCount();
-    setTotalBlogs(res.data.count);
-  };
+  // const userCount = async () => {
+  //   let res = await usersCount();
+  //   setTotalUsers(res.data.count);
+  // };
+  // const blogCount = async () => {
+  //   let res = await blogsCount();
+  //   setTotalBlogs(res.data.count);
+  // };
   let i = 0;
   const getBlogs = async () => {
     setLoading(true);
-    const res = await getAllBlogs();
-    setAllBlogs(res.data);
+    const token=localStorage.getItem('JWTFINALTOKEN');
+
+    const res = await getAllBlogs(token);
+    setAllBlogs(res.data.data.allBlogs);
     setLoading(false);
   };
-  const homeValid = async () => {
-    let token = localStorage.getItem("JWTFINALTOKEN");
-    setLoading(true);
-    const res = await axios.get(`${url}/validuser`, {
-      headers: { Authorization: token },
-    });
-
-    if (res.data.status === 401 || !res.data.status) {
-      pageRoute("/login");
-    } else {
-      pageRoute("/");
-      setLoginData(res.data.userValid);
-      user.push(res.data.user);
-    }
-  };
+  
   useEffect(() => {
-    homeValid();
+
     getBlogs();
-    userCount();
-    blogCount();
+  
   }, []);
   return (
     <>
@@ -355,14 +342,16 @@ function Home() {
             Week
           </h3>
           <div className="featured-blogs">
-            
             {/* <Blog category="Travel" title="Set Video Playback Speed With Javascript" headerImg=" " authorImg=" " publishdate="02 December 2022" readtime="3 min Read" intro="Did you come here for something in particular or just general Riker-bashing? And blowing into" /> */}
           </div>
         </section>
         <section className="right-section">
-          <div className="right-blog" style={{
-            marginBottom:"30px"
-          }}>
+          <div
+            className="right-blog"
+            style={{
+              marginBottom: "30px",
+            }}
+          >
             <h3 className="featured">
               <span className="backgroundColor">&nbsp;Popular </span>
               &nbsp;Posted

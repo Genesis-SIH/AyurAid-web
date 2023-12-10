@@ -28,22 +28,22 @@ function Navbar(props) {
       pageRoute('/')
     }
   }
-  const homeValid = async () => {
-    let token = localStorage.getItem("JWTFINALTOKEN")
-    const res = await axios.get("http://localhost:8000/validuser", { headers: { "Authorization": token } })
+  // const homeValid = async () => {
+  //   let token = localStorage.getItem("JWTFINALTOKEN")
+  //   const res = await axios.get("http://localhost:8000/validuser", { headers: { "Authorization": token } })
 
-    if (res.data.status === 401 || !res.data.status) {
-      pageRoute('/login')
-    }
-    else {
-      setLoginData(res.data.userValid)
-    }
-  }
+  //   if (res.data.status === 401 || !res.data.status) {
+  //     pageRoute('/login')
+  //   }
+  //   else {
+  //     setLoginData(res.data.userValid)
+  //   }
+  // }
 
-  useEffect(() => {
-    homeValid()
-    // logout()
-  }, [])
+  // useEffect(() => {
+  //   homeValid()
+  //   // logout()
+  // }, [])
   // console.log(loginData)
 
 
@@ -55,7 +55,9 @@ function Navbar(props) {
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
           <a href='/'>
-            <img className='logo' src={logo} alt=""  height={200} width={500}/>
+            <img className='logo' src={logo} alt=""  style={{
+              background:"transparent"
+            }}  />
           </a>
         </div>
         <div>

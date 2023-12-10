@@ -2,8 +2,7 @@
   width: 100%;
   padding-left: 8%;
   padding-right: 8%;
-  background-color: 
-  rgba(242, 248, 247, 1);
+  background: linear-gradient(to top, #102B24, #000, #516560);
 }
 .profile-section{
   display: flex;
@@ -30,7 +29,7 @@ object-fit:cover;
   width: 59%;
   letter-spacing: 0.2px;
   color: 
-  rgba(85, 85, 85, 1);
+  #efefef
 }
 .nousers{
   font-size: 17px;
@@ -44,7 +43,7 @@ left: 34%;
 .profile-name{
   font-size: 28px;
   font-size: 700;
-  color:#292929;
+  color:#00bc8b;
 }
 .follow-flex{
   display: flex;

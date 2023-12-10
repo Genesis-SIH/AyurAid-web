@@ -1,8 +1,8 @@
 import axios from "axios";
-const url = "http://localhost:8000";
+const url = "https://ayuraid.onrender.com/api/auth";
 export const registerUser = async (body) => {
   try {
-    return await axios.post(`${url}/register`, body);
+    return await axios.post(`${url}/signup`, body);
   } catch (error) {
     console.log("Error in registerUser api");
   }
@@ -10,7 +10,7 @@ export const registerUser = async (body) => {
 
 export const loginUser = async (data) => {
   try {
-    return await axios.post(`${url}/login`, data, { withCredentials: true });
+    return await axios.post(`${url}/login`, data);
   } catch (error) {
     console.log(error);
   }
