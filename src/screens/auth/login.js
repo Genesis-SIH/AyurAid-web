@@ -4,9 +4,16 @@ import { Colors } from "../../utils";
 import AppText from "../../components/AppText";
 import TypingAnimation from "../../components/TypingAnimation";
 import ayur from "../../assets/ayur.png";
+import { loginUser } from "../../apis/users";
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
   const [isOpened, setIsOpened] = useState(false);
-
+  const [loginData, setloginData] = useState({
+    identity: "",
+    password: "",
+  });
+  const nav = useNavigate();
   const gradientStyle = {
     background: `linear-gradient(to top, ${Colors.darkGreen},${Colors.colorBlack},${Colors.darkGreen})`,
     minHeight: "100%",
@@ -18,30 +25,19 @@ const Login = () => {
     paddingLeft: "20px", // Added left padding for space
   };
 
-  const openModal = () => {
-    setIsOpened(true);
-    document.body.style.overflow = "hidden";
-  };
-
   const closeModal = () => {
     setIsOpened(false);
     document.body.style.overflow = "initial";
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > window.innerHeight / 3 && !isOpened) {
-        setIsOpened(true);
-        openModal();
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [isOpened]);
+  const handleLogin = async () => {
+    console.log(loginData);
+    await loginUser(loginData).then((data) => {
+      localStorage.setItem("userCred", JSON.stringify(data.data));
+      console.log("localStorage", localStorage.getItem("userCred"));
+      nav("/");
+    });
+  };
 
   return (
     <div>
@@ -53,7 +49,7 @@ const Login = () => {
             style={{
               paddingBottom: "50px",
               paddingLeft: "30px",
-              paddingTop: "50px"
+              paddingTop: "50px",
             }}
           >
             AyurAid
@@ -62,7 +58,9 @@ const Login = () => {
             <TypingAnimation />
           </div>
           <div>
-            <button className="modal-button">Click here to login</button>
+            <button className="modal-button" onClick={() => setIsOpened(true)}>
+              Click here to login
+            </button>
           </div>
         </div>
         <div className="image-row">
@@ -79,7 +77,18 @@ const Login = () => {
               <label for="email" className="input-label">
                 Email
               </label>
-              <input type="email" name="email" id="email" placeholder="Email" />
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Email or Username"
+                onChange={(e) => {
+                  setloginData({
+                    ...loginData,
+                    identity: e.target.value,
+                  });
+                }}
+              />
             </div>
             <div className="input-block">
               <label for="password" className="input-label">
@@ -90,13 +99,25 @@ const Login = () => {
                 name="password"
                 id="password"
                 placeholder="Password"
+                onChange={(e) => {
+                  setloginData({
+                    ...loginData,
+                    password: e.target.value,
+                  });
+                }}
               />
             </div>
             <div className="modal-buttons">
-              <a href="" className="">
+              <a
+                href=""
+                className=""
+                style={{ color: "black", fontSize: "18px" }}
+              >
                 Forgot your password?
               </a>
-              <button className="input-button">Login</button>
+              <button className="input-button" onClick={handleLogin}>
+                Login
+              </button>
             </div>
             <p className="sign-up">
               Don't have an account? <a href="#">Sign up now</a>
