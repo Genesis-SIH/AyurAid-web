@@ -33,7 +33,7 @@ import Share from "../AdditionalPages/Share";
 import loadingAnimation from "../../assets/loading.gif";
 
 function Blog() {
-  const { id } = useParams();
+  const id = useParams();
   const [blog, setBlog] = useState([]);
   const [recentBlog, setRecentBlog] = useState([]);
 
@@ -53,22 +53,17 @@ function Blog() {
   const getBlog = async () => {
     let userDataString = localStorage.getItem("userCred");
     let userData = JSON.parse(userDataString);
-    const res = await getAllBlogs(userData.data.token, id);
-    console.log(res.data.data.allBlogs[0]);
-    setBlog(res.data.data.allBlogs[0]);
-    setLikes(res.data.data.allBlogs[0].likes);
-    console.log(res.data.data.allBlogs[0].likes);
-    // let res = await getBlogById(id);
-    // let data = res.data.message;
-
-    // setLoading(false);
+    const res = await getBlogById(userData.data.token, id);
+    console.log(res.data.data.blog);
+    setBlog(res.data.data.blog);
+    setLikes(res.data.data.blog.likes);
   };
   const bookmarkBlog = async () => {
-    await bookmark(id, { userId: loginData._id });
+    bookmark(id, loginData.token);
     setBookmark(true);
   };
   const unbookmarkBlog = async () => {
-    await unbookmark(id, { userId: loginData._id });
+    unbookmark(id, loginData.token);
     setBookmark(false);
   };
   const like = async () => {
@@ -147,6 +142,7 @@ function Blog() {
                       className="author-image single-blog-author"
                       src={`data:image/jpeg;base64,${blog.authorImage}`}
                       alt=""
+                      style={{ height: "50px", width: "auto" }}
                     />
                   </a>
                   <div className="authorProfileInfo">
@@ -179,9 +175,7 @@ function Blog() {
                           &nbsp;{blog.publishDate}&nbsp;
                         </p>
                       </div>
-                      <div>
-                        <span className="dot m-1">.</span>
-                      </div>
+
                       <div className="icons-flex">
                         {" "}
                         &nbsp;
@@ -207,18 +201,25 @@ function Blog() {
 
                       <div className="link-div">
                         <MdOutlineBookmarkAdd
-                          style={{ display: bookmarkSet ? "none" : "block" }}
+                          style={{
+                            display: bookmarkSet ? "none" : "block",
+                            color: "black",
+                          }}
                           onClick={() => bookmarkBlog()}
                           className="bookmark-icon blog-icons"
                         />
                         <MdOutlineBookmark
-                          style={{ display: bookmarkSet ? "block" : "none" }}
+                          style={{
+                            display: bookmarkSet ? "block" : "none",
+                            color: "black",
+                          }}
                           onClick={() => unbookmarkBlog()}
                           className="bookmark-icon blog-icons"
                         />
                         <BsLink45Deg
                           onClick={copytoclipboard}
                           className="link-icon blog-icons"
+                          style={{ color: "black" }}
                         />
                         <span
                           style={{ display: showCopy ? "block" : "none" }}
@@ -287,32 +288,10 @@ function Blog() {
                         className="link-icon"
                       />
                     </div>
-                    <MdOutlineBookmarkAdd
-                      style={{
-                        display: bookmarkSet ? "none" : "block",
-                        marginTop: "2px",
-                      }}
-                      onClick={() => bookmarkBlog()}
-                      className="bookmark-icon blog-icons mt-1"
-                    />
-                    <MdOutlineBookmark
-                      style={{
-                        display: bookmarkSet ? "block" : "none",
-                        marginTop: "2px",
-                      }}
-                      onClick={() => unbookmarkBlog()}
-                      className="bookmark-icon blog-icons "
-                    />
                   </div>
                 </div>
-                <div className="end-dots mt-5">
-                  <div className="enddots"></div>
-                  <div className="enddots"></div>
-                  <div className="enddots"></div>
-                  <div className="enddots"></div>
-                </div>
+                <div className="end-dots mt-5"></div>
               </div>
-
               <div className="comment-section"></div>
             </>
           }

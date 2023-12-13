@@ -72,7 +72,7 @@ const Login = () => {
         <div class="modal-container">
           <div class="modal-left">
             <h1 class="modal-title">Welcome!</h1>
-            <p class="modal-desc">AyurAid blogs 2023</p>
+            <p class="modal-desc">AyurAid blogs</p>
             <div className="input-block">
               <label for="email" className="input-label">
                 Email
