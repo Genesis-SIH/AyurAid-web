@@ -10,7 +10,7 @@ export const registerUser = async (body) => {
 
 export const loginUser = async (data) => {
   try {
-    return await axios.post(`${url}/login`, data, { withCredentials: true });
+    return await axios.post(`https://ayuraid.onrender.com/api/auth/login`, data, { withCredentials: true });
   } catch (error) {
     console.log(error);
   }

@@ -1,31 +1,23 @@
 import React, { useState } from "react";
 import "./Home.css";
-import image from "../../assets/test.jpg";
 import { categoryCount, getAllBlogs, getBlogById } from "../../apis/Blogs";
-import { usersCount, blogsCount, getUserById } from "../../apis/users";
-import {
-  TiSocialFacebook,
-  TiSocialLinkedin,
-  TiSocialTwitter,
-} from "react-icons/ti";
-import { AiOutlineInstagram } from "react-icons/ai";
+import { getUserById } from "../../apis/users";
 import { useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
-import { LoginContext } from '../../utils/contextProvider/Context';
+import { LoginContext } from "../../utils/contextProvider/Context";
 import { useNavigate } from "react-router-dom";
 import loadingAnimation from "../../assets/loading.gif";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
-const url = "http://localhost:8000";
 export const user = [];
 
 function ShortBlogs(props) {
   const [blogs, setBlogs] = useState([]);
 
   const getBlogs = async () => {
-    const res = await getAllBlogs();
-    console.log(res.data)
-    setBlogs(res.data);
+    let userDataString = localStorage.getItem("userCred");
+    let userData = JSON.parse(userDataString);
+    const res = await getAllBlogs(userData.data.token);
+    setBlogs(res.data.data.allBlogs);
   };
   useEffect(() => {
     getBlogs();
@@ -37,17 +29,17 @@ function ShortBlogs(props) {
             return (
               <>
                 <a href={`/blog/${e._id}`}>
-                  <div className="short-blog mb-5">
-                    <a href={`/tag/${e.category}`}>
-                      <span className="category">{e.category}</span>
-                    </a>
-                    <h3 className="right-blog-title short-blog-title mt-3">
-                      {e.title}
+                  <div className="short-blog">
+                    <h3 className="right-blog-title short-blog-title">
+                      {e.title}{" "}
+                      <a href={`/tag/${e.category}`}>
+                        <span className="category">{e.tag}</span>
+                      </a>
                     </h3>
                     <div className="minor-info pt-2 mb-0">
                       <img
                         className="author-image"
-                        src={e.authorImage}
+                        src={`data:image/jpeg;base64,${e.authorImage}`}
                         alt=""
                       />
                       &nbsp;
@@ -88,7 +80,7 @@ function ShortBlogs(props) {
                           />
                         </svg>
                         &nbsp;
-                        <p className="publishdate"> {e.readtime} </p>
+                        <p className="publishdate"> {e.readtime}min </p>
                       </div>
                     </div>
                     <div
@@ -106,182 +98,67 @@ function ShortBlogs(props) {
     </>
   );
 }
-function PopularAuthors(props) {
-  const [farhanProf, setFarhanProf] = useState("");
-  const farhan = async () => {
-    const res = await getUserById("6356398360be867515164b63");
-    setFarhanProf(res.data.success);
-  };
-  useEffect(() => {
-    farhan();
-  }, []);
-  return (
-    <>
-      <a href={`/profile/${farhanProf._id}`}>
-        <div className="profile mb-5">
-          <img className="top-author" src={farhanProf.profilePic} alt="" />
-          <div className="author-info">
-            <h4 className="authorName">{farhanProf.username}</h4>
-            <h5 className="designation">
-              {farhanProf.bio?.slice(0, 60) + "..."}
-            </h5>
-            <div className="authorSocials">
-              <a href={farhanProf.facebook} target="_blanck">
-                <TiSocialFacebook className="social-icons" />
-              </a>
-              <a href={farhanProf.linkedin} target="_blanck">
-                <TiSocialLinkedin className="social-icons" />
-              </a>
-              <a href={farhanProf.twitter} target="_blanck">
-                <TiSocialTwitter className="social-icons" />
-              </a>
-              <a href={farhanProf.instagram} target="_blanck">
-                <AiOutlineInstagram className="social-icons" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </a>
-    </>
-  );
-}
+
 export function RightSection() {
-  const [totalUsers, setTotalUsers] = useState("");
-  const [totalBlogs, setTotalBlogs] = useState("");
-  const [catCount, setCatCount] = useState(0);
-  const userCount = async () => {
-    let res = await usersCount();
-    setTotalUsers(res.data.count);
-  };
-  const blogCount = async () => {
-    let res = await blogsCount();
-    setTotalBlogs(res.data.count);
-  };
-  const categoriesCount = async () => {
-    const res = await categoryCount();
-    setCatCount(res.data);
-  };
-  useEffect(() => {
-    userCount();
-    blogCount();
-    categoriesCount();
-  }, []);
   return (
     <>
       <div className="sec-2-right">
-        <h3 className="featured mb-5">
-          <span className="backgroundColor">&nbsp;Top &nbsp;</span>&nbsp;Author
-        </h3>
-        <PopularAuthors />
-        <PopularAuthors />
-        <PopularAuthors />
-
-        <div className="ad text-center center">
-          <p className="ad-title">Ad</p>
-          <div className="for-add">
-            <h6 className="adTitle">
-              Want To Collaborate Or Suggest Something?
-            </h6>
-            <p className="adDescription">
-              If someone discovers any bugs or technical concerns, please notify
-              me.
-            </p>
-            <a href={`/profile/6356398360be867515164b63`}>
-              <button className="adBtn">Connect</button>
-            </a>
-          </div>
+        <div className="container-fluid homepage">
+          <section className="right-section">
+            <div className="right-blog">
+              <h3 className="featured">
+                <span className="backgroundColor">&nbsp;Popular </span>
+                &nbsp;Posted
+              </h3>
+              <div className="scroll">
+                <ShortBlogs />
+              </div>
+            </div>
+          </section>
         </div>
-
-        <div className="categories-section">
-          <h3 className="featured mt-5">
-            <span className="backgroundColor">&nbsp;Categories&nbsp;</span>
-          </h3>
-          <table className="table table-borderless mt-4">
-            <tbody>
-              <tr className="border mb-5" onClick={() => console.log("hello")}>
-                <th scope="row categorie-title">Technology</th>
-                <td className="text-right categorie-result">
-                  {catCount.technology}
-                </td>
-              </tr>
-
-              <tr className="border">
-                <th scope="row categorie-title">Fashion</th>
-                <td className="text-right categorie-result">
-                  {catCount.fashion}
-                </td>
-              </tr>
-              <tr className="border">
-                <th scope="row categorie-title">Javascript</th>
-                <td className="text-right categorie-result">
-                  {catCount.javascript}
-                </td>
-              </tr>
-              <tr className="border">
-                <th scope="row categorie-title">Business</th>
-                <td className="text-right categorie-result">
-                  {catCount.business}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className="sticky-section">
-          <h3 className="featured mt-5 mb-5">
-            <span className="backgroundColor">&nbsp;Website&nbsp;</span>
-            &nbsp;Update
-          </h3>
-
-          <div className="update-section">
-            <div className="updates-card">
-              <h4 className="updates-no">{totalBlogs}</h4>
-              <p className="updates-des">Posts</p>
+        <div
+          className="container-fluid homepage"
+          style={{ display: "block", marginTop: "50px" }}
+        >
+          <section className="right-section">
+            <div className="right-blog">
+              <div className="search-with-tags">
+                <h3 className="featured">
+                  <span className="backgroundColor">&nbsp;Popular&nbsp;</span>
+                  &nbsp;categories
+                </h3>
+                <div
+                  className="all-tags  mt-4"
+                  style={{ paddingRight: "80px" }}
+                >
+                  <a href={`/tag/Travel`}>
+                    <button className="tag">Travel</button>
+                  </a>
+                  <a href={`/tag/Lifestyle`}>
+                    <button className="tag">Lifestyle</button>
+                  </a>
+                  <a href={`/tag/Fashion`}>
+                    <button className="tag">Fashion</button>
+                  </a>
+                  <a href={`/tag/Technology`}>
+                    <button className="tag">Technology</button>
+                  </a>
+                  <a href={`/tag/Business`}>
+                    <button className="tag">Business</button>
+                  </a>
+                  <a href={`/tag/Health`}>
+                    <button className="tag">Health</button>
+                  </a>
+                  <a href={`/tag/Javascript`}>
+                    <button className="tag">Javascript</button>
+                  </a>
+                  <a href={`/tag/Blockchain`}>
+                    <button className="tag">Blockchain</button>
+                  </a>
+                </div>
+              </div>
             </div>
-            <div className="updates-card card-2">
-              <h4 className="updates-no">255</h4>
-              <p className="updates-des">Visitors</p>
-            </div>
-            <div className="updates-card">
-              <h4 className="updates-no">{totalUsers}</h4>
-              <p className="updates-des">Users</p>
-            </div>
-            <div className="updates-card">
-              <h4 className="updates-no">{totalBlogs * (totalUsers - 1)}</h4>
-              <p className="updates-des">Blog Read</p>
-            </div>
-          </div>
-          <div className="search-with-tags">
-            <h3 className="featured mt-5">
-              <span className="backgroundColor">&nbsp;Popular&nbsp;</span>
-              &nbsp;categories
-            </h3>
-            <div className="all-tags  mt-4">
-              <a href={`/tag/Travel`}>
-                <button className="tag">Travel</button>
-              </a>
-              <a href={`/tag/Lifestyle`}>
-                <button className="tag">Lifestyle</button>
-              </a>
-              <a href={`/tag/Fashion`}>
-                <button className="tag">Fashion</button>
-              </a>
-              <a href={`/tag/Technology`}>
-                <button className="tag">Technology</button>
-              </a>
-              <a href={`/tag/Business`}>
-                <button className="tag">Business</button>
-              </a>
-              <a href={`/tag/Health`}>
-                <button className="tag">Health</button>
-              </a>
-              <a href={`/tag/Javascript`}>
-                <button className="tag">Javascript</button>
-              </a>
-              <a href={`/tag/Blockchain`}>
-                <button className="tag">Blockchain</button>
-              </a>
-            </div>
-          </div>
+          </section>
         </div>
       </div>
     </>
@@ -292,87 +169,22 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const { loginData, setLoginData } = useContext(LoginContext);
   const pageRoute = useNavigate();
-  const [totalUsers, setTotalUsers] = useState("");
-  const [totalBlogs, setTotalBlogs] = useState("");
-  const userCount = async () => {
-    let res = await usersCount();
-    setTotalUsers(res.data.count);
-  };
-  const blogCount = async () => {
-    let res = await blogsCount();
-    setTotalBlogs(res.data.count);
-  };
-  let i = 0;
-  const getBlogs = async () => {
-    setLoading(true);
-    const res = await getAllBlogs();
-    setAllBlogs(res.data);
-    setLoading(false);
-  };
-  const homeValid = async () => {
-    let token = localStorage.getItem("JWTFINALTOKEN");
-    setLoading(true);
-    const res = await axios.get(`${url}/validuser`, {
-      headers: { Authorization: token },
-    });
 
-    if (res.data.status === 401 || !res.data.status) {
-      pageRoute("/login");
-    } else {
-      pageRoute("/");
-      setLoginData(res.data.userValid);
-      user.push(res.data.user);
-    }
+  const getBlogs = async () => {
+    let userDataString = localStorage.getItem("userCred");
+    let userData = JSON.parse(userDataString);
+    setLoginData(userData.data);
+    let res = await getAllBlogs(userData.data.token);
+    setAllBlogs(res.data.data.allBlogs);
   };
+
   useEffect(() => {
-    homeValid();
     getBlogs();
-    userCount();
-    blogCount();
   }, []);
+
   return (
     <>
       <Navbar />
-      <div
-        style={{ display: loading ? "block" : "none" }}
-        className="loading-animation"
-      >
-        <div className="loading-div">
-          <img
-            style={{ width: "200px", height: "200px" }}
-            src={loadingAnimation}
-            alt=""
-          />
-        </div>
-      </div>
-      <div
-        style={{ display: loading ? "none" : "" }}
-        className="container-fluid homepage"
-      >
-        <section className="left-section">
-          <h3 className="featured">
-            <span className="backgroundColor">&nbsp;Featured </span>&nbsp;This
-            Week
-          </h3>
-          <div className="featured-blogs">
-            
-            {/* <Blog category="Travel" title="Set Video Playback Speed With Javascript" headerImg=" " authorImg=" " publishdate="02 December 2022" readtime="3 min Read" intro="Did you come here for something in particular or just general Riker-bashing? And blowing into" /> */}
-          </div>
-        </section>
-        <section className="right-section">
-          <div className="right-blog">
-            <h3 className="featured">
-              <span className="backgroundColor">&nbsp;Popular </span>
-              &nbsp;Posted
-            </h3>
-            <div className="scroll">
-              {/* {/* <ShortBlogs shortcategory="Travel" authorImg={image} title="Design is the Mix of emotions" publishdate="23 December 2022" readtime="3 min Read" intro="Did you come here for something in particular or just general Riker-bashing? And blowing into maximum warp" /> */}
-              {/* shortcategory="Travel" authorImg=" " title="Design is the Mix of emotions" publishdate="23 December 2022" readtime="3 min Read" intro="Did you come here for something in particular or just general Riker-bashing? And blowing into maximum warp" /> */}
-              <ShortBlogs />
-            </div>
-          </div>
-        </section>
-      </div>
       <section style={{ display: loading ? "none" : "" }} className="section-2">
         <div className="sec-2-left">
           <h3 className="featured">
@@ -386,12 +198,12 @@ function Home() {
                     <img
                       onClick={() => pageRoute(`/${e._id}`)}
                       className="recent-blog-img"
-                      src={e.image}
+                      src={`data:image/jpeg;base64,${e.image}`}
                       alt=""
                     />
                     <div className="blogInfo">
                       <a href={`/tag/${e.category}`}>
-                        <span className="category">{e.category}</span>
+                        <span className="category">{e.tag}</span>
                       </a>
                       <h3 className="right-blog-title mt-2">{e.title}</h3>
                       <a
@@ -401,15 +213,14 @@ function Home() {
                         <div className="minor-info">
                           <img
                             className="author-image"
-                            src={e.authorImage}
+                            src={`data:image/jpeg;base64,${e.authorImage}`}
                             alt=""
                           />
-                          <span className="publishdate">
+                          <span className="publishuser">
                             &nbsp;&nbsp;{e.authorName}
                           </span>
                           &nbsp;
                           <div className="icons-flex">
-                            {" "}
                             &nbsp;
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -447,7 +258,7 @@ function Home() {
                               />
                             </svg>
                             &nbsp;
-                            <p className="publishdate">{e.readtime}</p>
+                            <p className="publishdate">{e.readtime}min</p>
                           </div>
                         </div>
                       </a>

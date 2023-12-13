@@ -12,8 +12,7 @@ body {
 }
 
 .container {
-  height: 200vh;
-  /* background-image: url(https://images.unsplash.com/photo-1538137524007-21e48fa42f3f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ac9fa0975bd2ebad7afd906c5a3a15ab&auto=format&fit=crop&w=1834&q=80); */
+  height: 100vh;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -22,7 +21,7 @@ body {
 .modal {
   position: fixed;
   left: 0;
-  bottom: 0;
+  bottom: -10vh;
   width: 100%;
   height: 60px;
   background: rgba(20, 45, 31, 0.5); /* Updated to use seconday color */
@@ -51,7 +50,7 @@ body {
   font-size: 26px;
   margin: 0;
   font-weight: 400;
-  color: #00BC8B;
+  color: #00bc8b;
 }
 
 .modal-desc {
@@ -60,7 +59,7 @@ body {
 
 .modal-left {
   padding: 60px 30px 20px;
-  background: linear-gradient(to top,#00BC8B ,#000,#0f2318);
+  background: linear-gradient(to top, #00bc8b, #000, #0f2318);
   flex: 1.5;
   transition-duration: 0.5s;
   transform: translateY(80px);
@@ -68,23 +67,24 @@ body {
 }
 
 .modal-button {
-  color: #00BC8B;
+  color: #00bc8b;
   font-family: "Nunito", sans-serif;
   font-size: 18px;
-  margin-top: 100px;
-  margin-left:80px ;
+  position: absolute;
+  top: 70vh;
+  left: 110px;
   cursor: pointer;
   border: 0;
   outline: 0;
   padding: 10px 40px;
   border-radius: 30px;
   background: #0f2318;
-  box-shadow: 0 10px 40px #00BC8B;
+  box-shadow: 0 10px 40px #00bc8b;
   transition: 0.3s;
 }
 
 .modal-button:hover {
-  border-color: #00BC8B;
+  border-color: #00bc8b;
   background: rgba(255, 255, 255, 0.8);
 }
 
@@ -103,11 +103,10 @@ body {
   transition-duration: 1.2s;
 }
 
-
 .modal.is-open {
-    height: 100%;
-    background: rgba(20, 45, 31, 0.85); /* Updated to use seconday color */
-  }
+  height: 120%;
+  background: rgba(20, 45, 31, 0.85); /* Updated to use seconday color */
+}
 
 .modal.is-open .modal-button {
   opacity: 0;
@@ -157,7 +156,7 @@ body {
   border: 0;
   color: #fff;
   border-radius: 4px;
-  background: #00BC8B;
+  background: #00bc8b;
   font-family: "Nunito", sans-serif;
   transition: 0.3s;
   cursor: pointer;
@@ -173,7 +172,7 @@ body {
   font-family: "Nunito", sans-serif;
   font-weight: 600;
   letter-spacing: 0.7px;
-  color: #00BC8B;
+  color: #00bc8b;
   transition: 0.3s;
 }
 
@@ -181,7 +180,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 10px 10px 8px;
- 
+
   border-radius: 4px;
   margin-bottom: 20px;
   transition: 0.3s;
@@ -189,8 +188,8 @@ body {
 
 .input-block input {
   outline: 0;
-  border: 1px solid #00BC8B;
-  border-radius:5px;
+  border: 1px solid #00bc8b;
+  border-radius: 5px;
   padding: 4px 5px 0;
   height: 34px;
   color: #ccc;
@@ -206,11 +205,11 @@ body {
 }
 
 .input-block:focus-within {
-  border-color: #00BC8B;
+  border-color: #00bc8b;
 }
 
 .input-block:focus-within .input-label {
-  color:#00BC8B
+  color: #00bc8b;
 }
 
 .icon-button {
@@ -227,35 +226,36 @@ body {
 }
 
 .scroll-down {
-    position: fixed;
-    top: 30%;
-    left: 50%; /* Adjusted to center horizontally */
-    display: flex;
-    flex-direction: row; /* Changed to row to place text and image side by side */
-    align-items: center;
-    transform: translate(-50%, -50%);
-  }
-  
-  .scroll-down .image {
-    margin-left: 20px; /* Adjusted margin for spacing between text and image */
-  }
-  .text-column {
-    display: flex;
-    padding-top: 100px;
-    flex-direction: column; /* Display text in a column */
-    align-items: flex-start; /* Align text to the start of the column */
-    margin-right: 450px; /* Adjusted margin for spacing between text and image */
-  }
-  
-  .image-row {
-    display: flex;
-    align-items: flex-end;
-    margin-top: 200px;
-  }
-  .image {
-    height: 400px;
-    width: 400px;
-  }
+  position: fixed;
+  top: 30%;
+  left: 50%; /* Adjusted to center horizontally */
+  display: flex;
+  flex-direction: row; /* Changed to row to place text and image side by side */
+  align-items: center;
+  transform: translate(-50%, -50%);
+}
+
+.scroll-down .image {
+  margin-left: 20px;
+}
+.text-column {
+  display: flex;
+  padding-top: 100px;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 450px;
+  height: 587px;
+}
+
+.image-row {
+  display: flex;
+  align-items: flex-end;
+  margin-top: 200px;
+}
+.image {
+  height: 400px;
+  width: 400px;
+}
 
 .scroll-down svg {
   margin-top: 16px;
