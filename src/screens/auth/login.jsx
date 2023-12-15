@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./login.css";
 import { Colors } from "../../utils";
 import AppText from "../../components/AppText";
 import TypingAnimation from "../../components/TypingAnimation";
 import ayur from "../../assets/ayur.png";
-import { loginUser } from "../../apis/users";
+import { loginUser, getUserById } from "../../apis/users";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../../utils/contextProvider/Context";
 
 const Login = () => {
   const [isOpened, setIsOpened] = useState(false);
+  const { userDetails, setUserDetails } = useContext(LoginContext);
   const [loginData, setloginData] = useState({
     identity: "",
     password: "",
@@ -33,9 +35,12 @@ const Login = () => {
   const handleLogin = async () => {
     console.log(loginData);
     await loginUser(loginData).then((data) => {
-      localStorage.setItem("userCred", JSON.stringify(data.data));
-      console.log("localStorage", localStorage.getItem("userCred"));
-      nav("/");
+      localStorage.setItem("userToken", JSON.stringify(data.data.data.token));
+      getUserById(data.data.data.id, data.data.data.token).then((data) => {
+        console.log(data.data.data.userDetails)
+        setUserDetails(data.data.data.userDetails);
+        nav("/");
+      });
     });
   };
 

@@ -13,7 +13,7 @@ export const addBlog = async (data, token) => {
 export const getAllBlogs = async (token) => {
   try {
     return await axios.get(`${url}/blog/allBlogs`, {
-      headers: { Token: token },
+      headers: { Token: token, Lang: "en" },
     });
   } catch (error) {
     console.log(error);
@@ -22,7 +22,7 @@ export const getAllBlogs = async (token) => {
 export const getBlogById = async (token, id) => {
   try {
     return await axios.get(`${url}/blog/blog/${id.id}`, {
-      headers: { Token: token },
+      headers: { Token: token, Lang: "en" },
     });
   } catch (error) {
     console.log(error);

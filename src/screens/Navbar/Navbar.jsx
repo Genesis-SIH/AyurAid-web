@@ -8,12 +8,12 @@ import { IconContext } from "react-icons";
 import { ImCross } from "react-icons/im";
 import image from "../../assets/test.jpg";
 import { LoginContext } from "../../utils/contextProvider/Context";
-import logo from "../../assets/travelbrain-logo.svg";
+import logo from "../../assets/ayuraid.png";
 import defaultimage from "../../assets/defaultprofile.png";
 import axios from "axios";
 function Navbar(props) {
   const [sidebar, setSidebar] = useState(false);
-  const { loginData, setLoginData } = useContext(LoginContext);
+  const { userDetails, setUserDetails } = useContext(LoginContext);
   const [loginPage, setLoginPage] = useState(false);
   const pageRoute = useNavigate();
   const showSidebar = () => setSidebar(!sidebar);
@@ -39,10 +39,6 @@ function Navbar(props) {
     // }
   };
 
-  useEffect(() => {
-    console.log(loginData)
-  }, []);
-
   return (
     <div>
       <IconContext.Provider value={{ color: "rgba(51, 51, 51, 1)" }}>
@@ -67,17 +63,16 @@ function Navbar(props) {
             </li>
             <a
               style={{ textDecoration: "none" }}
-              href={`/profile/${loginData._id}`}
+              href={`/profile/${userDetails._id}`}
             >
               <div className="profileSection">
                 <img
                   className="userProfile"
-                  src={`data:image/jpeg;base64,${loginData.image}`}
+                  src={`data:image/jpeg;base64,${userDetails.profileImage}`}
                   alt=""
                 />
                 <div className="user-bio">
-                  <h4 className="user-name">{loginData.username}</h4>
-                  {/* <p className='short-description'>This need to be updated. so please make sure of it</p> */}
+                  <h4 className="user-name">{userDetails.username}</h4>
                 </div>
               </div>
             </a>

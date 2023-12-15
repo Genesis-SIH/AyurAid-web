@@ -10,14 +10,18 @@ export const registerUser = async (body) => {
 
 export const loginUser = async (data) => {
   try {
-    return await axios.post(`https://ayuraid.onrender.com/api/auth/login`, data, { withCredentials: true });
+    return await axios.post(`https://ayuraid.onrender.com/api/auth/login`, data, {
+      withCredentials: true,
+    });
   } catch (error) {
     console.log(error);
   }
 };
-export const getUserById = async (id) => {
+export const getUserById = async (id, token) => {
   try {
-    return await axios.get(`${url}/userById/${id}`);
+    return await axios.get(`https://ayuraid.onrender.com/api/user/user/${id}`, {
+      headers: { Token: token },
+    });
   } catch (error) {
     console.log(error);
   }

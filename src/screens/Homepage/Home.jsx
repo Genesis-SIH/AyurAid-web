@@ -1,23 +1,21 @@
 import React, { useState } from "react";
 import "./Home.css";
-import { categoryCount, getAllBlogs, getBlogById } from "../../apis/Blogs";
-import { getUserById } from "../../apis/users";
+import { getAllBlogs } from "../../apis/Blogs";
 import { useEffect, useContext } from "react";
 import { LoginContext } from "../../utils/contextProvider/Context";
 import { useNavigate } from "react-router-dom";
 import loadingAnimation from "../../assets/loading.gif";
-import axios from "axios";
 import Navbar from "../Navbar/Navbar";
-export const user = [];
 
 function ShortBlogs(props) {
   const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getBlogs = async () => {
-    let userDataString = localStorage.getItem("userCred");
-    let userData = JSON.parse(userDataString);
-    const res = await getAllBlogs(userData.data.token);
+    let userToken = localStorage.getItem("userToken");
+    let res = await getAllBlogs(JSON.parse(userToken));
     setBlogs(res.data.data.allBlogs);
+    setLoading(false);
   };
   useEffect(() => {
     getBlogs();
@@ -166,16 +164,16 @@ export function RightSection() {
 }
 function Home() {
   const [allBlogs, setAllBlogs] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const { loginData, setLoginData } = useContext(LoginContext);
+  const [loading, setLoading] = useState(true);
+  const { userDetails } = useContext(LoginContext);
   const pageRoute = useNavigate();
 
   const getBlogs = async () => {
-    let userDataString = localStorage.getItem("userCred");
-    let userData = JSON.parse(userDataString);
-    setLoginData(userData.data);
-    let res = await getAllBlogs(userData.data.token);
+    let userToken = localStorage.getItem("userToken");
+    let res = await getAllBlogs(JSON.parse(userToken));
+    console.log(res);
     setAllBlogs(res.data.data.allBlogs);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -185,6 +183,18 @@ function Home() {
   return (
     <>
       <Navbar />
+      <div
+        style={{ display: loading ? "block" : "none" }}
+        className="loading-animation"
+      >
+        <div className="loading-div">
+          <img
+            style={{ width: "200px", height: "200px" }}
+            src={loadingAnimation}
+            alt=""
+          />
+        </div>
+      </div>
       <section style={{ display: loading ? "none" : "" }} className="section-2">
         <div className="sec-2-left">
           <h3 className="featured">

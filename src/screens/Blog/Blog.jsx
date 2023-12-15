@@ -45,7 +45,6 @@ function Blog() {
   const [showApp, setShowApp] = useState(false);
   const [showCopy, setShowCopy] = useState(false);
 
-  let location = useLocation();
   const getRecent = async () => {
     const res = await getAllBlogs();
     setRecentBlog(res.data);
@@ -116,8 +115,6 @@ function Blog() {
         className="loading-animation"
       >
         <div className="loading-div">
-          {/* <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_a2chheio.json" background="transparent" speed="1" style={{ width: "140px", height: "140px" }} loop autoplay></lottie-player> */}
-          {/* <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_GppSUv.json" background="transparent" speed="1" style={{ width: "250px", height: "250px" }} loop autoplay></lottie-player> */}
           <img
             style={{ width: "200px", height: "200px" }}
             src={loadingAnimation}
