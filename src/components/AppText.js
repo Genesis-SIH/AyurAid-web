@@ -4,8 +4,8 @@ const AppText = (props) => {
   const { color, fontSize, bold, style, children } = props;
 
   const fontFamily = bold
-    ? { fontFamily: 'ProductSans-Bold' }
-    : { fontFamily: 'ProductSans-Regular' };
+    ? { fontFamily: 'ProductSans' }
+    : { fontFamily: 'ProductSans' };
 
   const textStyle = {
     color: color || 'white', // Default to white if color prop is not provided

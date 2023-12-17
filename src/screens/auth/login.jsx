@@ -33,11 +33,12 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    console.log(loginData);
+    // console.log(loginData);
     await loginUser(loginData).then((data) => {
       localStorage.setItem("userToken", JSON.stringify(data.data.data.token));
+      localStorage.setItem("loginData", JSON.stringify(data.data.data));
       getUserById(data.data.data.id, data.data.data.token).then((data) => {
-        console.log(data.data.data.userDetails)
+        // console.log(data.data.data.userDetails);
         setUserDetails(data.data.data.userDetails);
         nav("/");
       });

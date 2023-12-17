@@ -7,7 +7,7 @@
 }
 
 body {
-  font-family: "Nunito", sans-serif;
+ 
   color: rgba(255, 255, 255, 0.7); /* Updated to use colorWhite */
 }
 
@@ -68,7 +68,7 @@ body {
 
 .modal-button {
   color: #00bc8b;
-  font-family: "Nunito", sans-serif;
+
   font-size: 18px;
   position: absolute;
   top: 70vh;
@@ -157,7 +157,7 @@ body {
   color: #fff;
   border-radius: 4px;
   background: #00bc8b;
-  font-family: "Nunito", sans-serif;
+
   transition: 0.3s;
   cursor: pointer;
 }
@@ -169,7 +169,7 @@ body {
 .input-label {
   font-size: 11px;
   text-transform: uppercase;
-  font-family: "Nunito", sans-serif;
+
   font-weight: 600;
   letter-spacing: 0.7px;
   color: #00bc8b;
@@ -196,7 +196,7 @@ body {
   background-color: #0f2318;
   width: 300px;
   font-size: 13px;
-  font-family: "Nunito", sans-serif;
+
 }
 
 .input-block input::placeholder {

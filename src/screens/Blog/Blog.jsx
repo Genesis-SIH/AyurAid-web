@@ -50,10 +50,9 @@ function Blog() {
     setRecentBlog(res.data);
   };
   const getBlog = async () => {
-    let userDataString = localStorage.getItem("userCred");
-    let userData = JSON.parse(userDataString);
-    const res = await getBlogById(userData.data.token, id);
-    console.log(res.data.data.blog);
+    let userToken = localStorage.getItem("userToken");
+    const res = await getBlogById(id, userToken);
+    console.log(res);
     setBlog(res.data.data.blog);
     setLikes(res.data.data.blog.likes);
   };

@@ -28,10 +28,10 @@ export const getBlogById = async (token, id) => {
     console.log(error);
   }
 };
-export const getAuthorBlogs = async (token, id) => {
+export const getAuthorBlogs = async (token) => {
   try {
-    return await axios.get(`${url}/blog/blog/${id}`, {
-      headers: { Token: token },
+    return await axios.get(`${url}/blog/blogs`, {
+      headers: { Token: token, Lang: "en" },
     });
   } catch (error) {
     console.log(error);

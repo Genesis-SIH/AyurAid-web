@@ -7,6 +7,8 @@ import "./Navbar.css";
 import { IconContext } from "react-icons";
 import { ImCross } from "react-icons/im";
 import image from "../../assets/test.jpg";
+import { getAllBlogs } from "../../apis/Blogs";
+import { getUserById } from "../../apis/users";
 import { LoginContext } from "../../utils/contextProvider/Context";
 import logo from "../../assets/ayuraid.png";
 import defaultimage from "../../assets/defaultprofile.png";
@@ -28,6 +30,16 @@ function Navbar(props) {
       // pageRoute('/')
     }
   };
+
+  useEffect(() => {
+    let token = JSON.parse(localStorage.getItem("userToken"));
+    let loginData = JSON.parse(localStorage.getItem("loginData"));
+    getUserById(loginData.id, token).then((data) => {
+      console.log(data.data.data.userDetails);
+      setUserDetails(data.data.data.userDetails);
+    });
+  }, []);
+
   const homeValid = async () => {
     // let token = localStorage.getItem("JWTFINALTOKEN")
     // const res = await axios.get("http://localhost:8000/validuser", { headers: { "Authorization": token } })

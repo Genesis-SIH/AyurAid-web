@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Home.css";
 import { getAllBlogs } from "../../apis/Blogs";
+import { getUserById } from "../../apis/users";
 import { useEffect, useContext } from "react";
 import { LoginContext } from "../../utils/contextProvider/Context";
 import { useNavigate } from "react-router-dom";
@@ -165,7 +166,7 @@ export function RightSection() {
 function Home() {
   const [allBlogs, setAllBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { userDetails } = useContext(LoginContext);
+  const { userDetails, setUserDetails } = useContext(LoginContext);
   const pageRoute = useNavigate();
 
   const getBlogs = async () => {
@@ -177,6 +178,12 @@ function Home() {
   };
 
   useEffect(() => {
+    let token = JSON.parse(localStorage.getItem("userToken"));
+    let loginData = JSON.parse(localStorage.getItem("loginData"));
+    getUserById(loginData.id, token).then((data) => {
+      console.log(data.data.data.userDetails);
+      setUserDetails(data.data.data.userDetails);
+    });
     getBlogs();
   }, []);
 
