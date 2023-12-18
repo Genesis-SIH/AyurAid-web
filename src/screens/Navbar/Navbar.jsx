@@ -29,16 +29,9 @@ function Navbar(props) {
   const [loginPage, setLoginPage] = useState(false);
   const pageRoute = useNavigate();
   const showSidebar = () => setSidebar(!sidebar);
+  
   const logout = async () => {
-    let token = localStorage.getItem("JWTFINALTOKEN");
-    const res = await axios.get("http://localhost:8000/logout", {
-      headers: { Authorization: token },
-    });
-    if (res.data.status === 201) {
-      localStorage.removeItem("JWTFINALTOKEN");
-    } else {
-      // pageRoute('/')
-    }
+    localStorage.removeItem("userToken");
   };
 
   const options = [
