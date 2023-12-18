@@ -55,7 +55,6 @@ function Write() {
 
   return (
     <>
-      <Navbar />
       <div className="container mt-5">
         <form>
           <input

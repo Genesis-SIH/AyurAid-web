@@ -1,11 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Blog from "./screens/Blog/Blog";
 import Navbar from "./screens/Navbar/Navbar";
 import EditProfile from "./screens/Editprofile/EditProfile";
@@ -21,24 +17,25 @@ import Login from "./screens/auth/login";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
-        <Route element={<Profile />} />
-        <Route path="/blog/:id" element={<Blog />} />
-        <Route exact path="/navbar" element={<Navbar />} />
-        <Route exact path="/tag/:id" element={<Tag />} />
-        <Route path="/notifications" element={<Pending />} />
-        <Route exact path="/share" element={<Share />} />
-        <Route exact path="/edit/:id" element={<EditProfile />} />
-        <Route exact path="/profile/:id" element={<Profile />} />
-        <Route exact path="/bookmarks" element={<Bookmark />} />
-        <Route exact path="/write" element={<Write />} />
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route element={<Profile />} />
+          <Route path="/blog/:id" element={<Blog />} />
+          <Route exact path="/navbar" element={<Navbar />} />
+          <Route exact path="/tag/:id" element={<Tag />} />
+          <Route path="/notifications" element={<Pending />} />
+          <Route exact path="/share" element={<Share />} />
+          <Route exact path="/edit/:id" element={<EditProfile />} />
+          <Route exact path="/profile/:id" element={<Profile />} />
+          <Route exact path="/bookmarks" element={<Bookmark />} />
+          <Route exact path="/write" element={<Write />} />
 
-        <Route path="*" element={<Error />} />
-      </Routes>
-    </Router>
+          <Route path="*" element={<Error />} />
+        </Routes>
+      </Router>
   );
 }
 

@@ -15,9 +15,17 @@ import defaultimage from "../../assets/defaultprofile.png";
 import axios from "axios";
 import Select from "react-dropdown-select";
 function Navbar(props) {
+  useEffect(() => {
+    if (window?.location?.pathname == "/login") {
+      setShowNav(false);
+    }
+  }, [window?.location?.pathname]);
+
   const [sidebar, setSidebar] = useState(false);
+  const [showNav, setShowNav] = useState(true);
   const [lang, setLang] = useState("English");
   const { userDetails, setUserDetails } = useContext(LoginContext);
+  const { langGlobal, setLangGlobal } = useContext(LoginContext);
   const [loginPage, setLoginPage] = useState(false);
   const pageRoute = useNavigate();
   const showSidebar = () => setSidebar(!sidebar);
@@ -46,12 +54,12 @@ function Navbar(props) {
       value: 3,
       label: "Tamil",
     },
+    // {
+    //   value: 4,
+    //   label: "Marathi",
+    // },
     {
       value: 4,
-      label: "Marathi",
-    },
-    {
-      value: 5,
       label: "German",
     },
   ];
@@ -66,7 +74,19 @@ function Navbar(props) {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("Lang", JSON.stringify(lang[0].label));
+    localStorage.setItem("globalLang", JSON.stringify(lang[0].label));
+    if (lang[0].label == "English") {
+      setLangGlobal("en");
+    } else if (lang[0].label == "Hindi") {
+      setLangGlobal("hi");
+    } else if (lang[0].label == "Tamil") {
+      setLangGlobal("ta");
+    } else if (lang[0].label == "German") {
+      setLangGlobal("de");
+    }
+    // else if (lang[0].label == "Marathi") {
+    //   setLangGlobal("ma");
+    // }
   }, [lang]);
 
   const homeValid = async () => {
@@ -81,80 +101,84 @@ function Navbar(props) {
   };
 
   return (
-    <div>
-      <IconContext.Provider value={{ color: "rgba(51, 51, 51, 1)" }}>
-        <div className="main-navbar">
-          <Link to="#" className="menu-bars">
-            <FaIcons.FaBars onClick={showSidebar} />
-          </Link>
-          <a href="/">
-            <img className="logo" src={logo} alt="" />
-          </a>
-          <Select
-            options={options}
-            onChange={(values) => setLang(values)}
-            style={{ color: "black" }}
-            placeholder={lang}
-          />
-        </div>
-        <div></div>
-        <nav
-          onClick={showSidebar}
-          className={sidebar ? "nav-menu active" : "nav-menu"}
-        >
-          <ul className="nav-menu-items" onClick={showSidebar}>
-            <li className="navbar-toggle">
-              <Link to="#" className="menu-bars">
-                <AiIcons.AiOutlineClose />
-              </Link>
-            </li>
-            <a
-              style={{ textDecoration: "none" }}
-              href={`/profile/${userDetails._id}`}
-            >
-              <div className="profileSection">
-                <img
-                  className="userProfile"
-                  src={`data:image/jpeg;base64,${userDetails.profileImage}`}
-                  alt=""
-                />
-                <div className="user-bio">
-                  <h4 className="user-name">{userDetails.username}</h4>
-                </div>
-              </div>
+    showNav && (
+      <div id="myNav">
+        <IconContext.Provider value={{ color: "rgba(51, 51, 51, 1)" }}>
+          <div className="main-navbar">
+            <Link to="#" className="menu-bars">
+              <FaIcons.FaBars onClick={showSidebar} />
+            </Link>
+            <a href="/">
+              <img className="logo" src={logo} alt="" />
             </a>
+            <Select
+              options={options}
+              onChange={(values) => {
+                setLang(values);
+              }}
+              style={{ color: "black" }}
+              placeholder={lang}
+            />
+          </div>
+          <div></div>
+          <nav
+            onClick={showSidebar}
+            className={sidebar ? "nav-menu active" : "nav-menu"}
+          >
+            <ul className="nav-menu-items" onClick={showSidebar}>
+              <li className="navbar-toggle">
+                <Link to="#" className="menu-bars">
+                  <AiIcons.AiOutlineClose />
+                </Link>
+              </li>
+              <a
+                style={{ textDecoration: "none" }}
+                href={`/profile/${userDetails._id}`}
+              >
+                <div className="profileSection">
+                  <img
+                    className="userProfile"
+                    src={`data:image/jpeg;base64,${userDetails.profileImage}`}
+                    alt=""
+                  />
+                  <div className="user-bio">
+                    <h4 className="user-name">{userDetails.username}</h4>
+                  </div>
+                </div>
+              </a>
 
-            {SidebarData.map((item, index) => {
-              if (item.title === "Logout") {
-                return (
-                  <>
-                    <a href="/login">
-                      <li onClick={logout} key={index} className={item.cName}>
-                        <Link to={item.path}>
-                          {item.icon}
+              {SidebarData.map((item, index) => {
+                if (item.title === "Logout") {
+                  return (
+                    <>
+                      <a href="/login">
+                        <li onClick={logout} key={index} className={item.cName}>
+                          <Link to={item.path}>
+                            {item.icon}
 
-                          <span className="nav-icons">{item.title}</span>
-                        </Link>
-                      </li>
-                    </a>
-                  </>
-                );
-              } else {
-                return (
-                  <li key={index} className={item.cName}>
-                    <a href={item.path}>
-                      {item.icon}
+                            <span className="nav-icons">{item.title}</span>
+                          </Link>
+                        </li>
+                      </a>
+                    </>
+                  );
+                } else {
+                  return (
+                    <li key={index} className={item.cName}>
+                      <a href={item.path}>
+                        {item.icon}
 
-                      <span className="nav-icons">{item.title}</span>
-                    </a>
-                  </li>
-                );
-              }
-            })}
-          </ul>
-        </nav>
-      </IconContext.Provider>
-    </div>
+                        <span className="nav-icons">{item.title}</span>
+                      </a>
+                    </li>
+                  );
+                }
+              })}
+            </ul>
+          </nav>
+        </IconContext.Provider>
+      </div>
+    )
   );
 }
 

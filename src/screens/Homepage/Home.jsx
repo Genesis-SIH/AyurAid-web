@@ -11,16 +11,18 @@ import Navbar from "../Navbar/Navbar";
 function ShortBlogs(props) {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { langGlobal, setLangGlobal } = useContext(LoginContext);
 
   const getBlogs = async () => {
+    setLoading(true);
     let userToken = localStorage.getItem("userToken");
-    let res = await getAllBlogs(JSON.parse(userToken));
+    let res = await getAllBlogs(JSON.parse(userToken), langGlobal);
     setBlogs(res.data.data.allBlogs);
     setLoading(false);
   };
   useEffect(() => {
     getBlogs();
-  }, []);
+  }, [langGlobal]);
   return (
     <>
       {blogs
@@ -167,11 +169,16 @@ function Home() {
   const [allBlogs, setAllBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const { userDetails, setUserDetails } = useContext(LoginContext);
+  const { langGlobal, setLangGlobal } = useContext(LoginContext);
   const pageRoute = useNavigate();
 
   const getBlogs = async () => {
+    if (!localStorage.getItem("loginData")) {
+      pageRoute("/login");
+    }
+    setLoading(true);
     let userToken = localStorage.getItem("userToken");
-    let res = await getAllBlogs(JSON.parse(userToken));
+    let res = await getAllBlogs(JSON.parse(userToken), langGlobal);
     console.log(res);
     setAllBlogs(res.data.data.allBlogs);
     setLoading(false);
@@ -180,16 +187,16 @@ function Home() {
   useEffect(() => {
     let token = JSON.parse(localStorage.getItem("userToken"));
     let loginData = JSON.parse(localStorage.getItem("loginData"));
-    getUserById(loginData.id, token).then((data) => {
+    getUserById(loginData.id, token, langGlobal).then((data) => {
       console.log(data.data.data.userDetails);
       setUserDetails(data.data.data.userDetails);
     });
     getBlogs();
-  }, []);
+    console.log(langGlobal);
+  }, [langGlobal]);
 
   return (
     <>
-      <Navbar />
       <div
         style={{ display: loading ? "block" : "none" }}
         className="loading-animation"
@@ -202,7 +209,7 @@ function Home() {
           />
         </div>
       </div>
-      <section style={{ display: loading ? "none" : "" }} className="section-2">
+      <section style={{ display: loading && "none" }} className="section-2">
         <div className="sec-2-left">
           <h3 className="featured">
             <span className="backgroundColor">&nbsp;Recently </span>&nbsp;Posted

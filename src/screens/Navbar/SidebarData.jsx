@@ -24,12 +24,12 @@ export const SidebarData = [
     icon: <BsPencilSquare />,
     cName: "nav-text",
   },
-  {
-    title: "Bookmarks",
-    path: "/bookmarks",
-    icon: <BsBookmarks />,
-    cName: "nav-text",
-  },
+  // {
+  //   title: "Bookmarks",
+  //   path: "/bookmarks",
+  //   icon: <BsBookmarks />,
+  //   cName: "nav-text",
+  // },
   {
     title: "Logout",
     path: "/login",

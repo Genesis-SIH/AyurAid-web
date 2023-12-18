@@ -37,7 +37,8 @@ function Blog() {
   const [blog, setBlog] = useState([]);
   const [recentBlog, setRecentBlog] = useState([]);
 
-  const { loginData, setLoginData } = useContext(LoginContext);
+  const { userDetails, setUserDetails } = useContext(LoginContext);
+  const { langGlobal, setLangGlobal } = useContext(LoginContext);
   const [bookmarkSet, setBookmark] = useState(false);
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState([]);
@@ -46,22 +47,27 @@ function Blog() {
   const [showCopy, setShowCopy] = useState(false);
 
   const getRecent = async () => {
-    const res = await getAllBlogs();
+    setLoading(true);
+    let userToken = localStorage.getItem("userToken");
+    const res = await getAllBlogs(JSON.parse(userToken), langGlobal);
     setRecentBlog(res.data);
+    setLoading(false);
   };
   const getBlog = async () => {
+    setLoading(true);
     let userToken = localStorage.getItem("userToken");
-    const res = await getBlogById(id, userToken);
+    const res = await getBlogById(JSON.parse(userToken), id, langGlobal);
     console.log(res);
     setBlog(res.data.data.blog);
     setLikes(res.data.data.blog.likes);
+    setLoading(false);
   };
   const bookmarkBlog = async () => {
-    bookmark(id, loginData.token);
+    bookmark(id, userDetails.token);
     setBookmark(true);
   };
   const unbookmarkBlog = async () => {
-    unbookmark(id, loginData.token);
+    unbookmark(id, userDetails.token);
     setBookmark(false);
   };
   const like = async () => {
@@ -91,7 +97,7 @@ function Blog() {
   useEffect(() => {
     getBlog();
     getRecent();
-    loginData.bookmarks?.map((e) => {
+    userDetails.bookmarks?.map((e) => {
       if (e === blog._id) {
         setBookmark(true);
       } else {
@@ -99,16 +105,15 @@ function Blog() {
       }
     });
     blog.likes?.map((e) => {
-      if (e === loginData._id) {
+      if (e === userDetails._id) {
         setLiked(true);
       } else {
         setLiked(false);
       }
     });
-  }, [loginData]);
+  }, [langGlobal]);
   return (
     <>
-      <Navbar />
       <div
         style={{ display: loading ? "block" : "none" }}
         className="loading-animation"

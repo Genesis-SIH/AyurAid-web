@@ -10,7 +10,7 @@ export const registerUser = async (body) => {
 
 export const loginUser = async (data) => {
   try {
-    return await axios.post(`https://ayuraid.onrender.com/api/auth/login`, data, {
+    return await axios.post(`https://ayuraid-backend.cyclic.app/api/auth/login`, data, {
       withCredentials: true,
     });
   } catch (error) {
@@ -19,7 +19,7 @@ export const loginUser = async (data) => {
 };
 export const getUserById = async (id, token) => {
   try {
-    return await axios.get(`https://ayuraid.onrender.com/api/user/user/${id}`, {
+    return await axios.get(`https://ayuraid-backend.cyclic.app/api/user/user/${id}`, {
       headers: { Token: token },
     });
   } catch (error) {

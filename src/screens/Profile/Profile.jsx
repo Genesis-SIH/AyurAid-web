@@ -12,7 +12,6 @@ import { getUserById } from "../../apis/users";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getAuthorBlogs } from "../../apis/Blogs";
-
 import { useContext } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -41,6 +40,7 @@ const style = {
 function Profile() {
   const [userBlogs, setUserBlogs] = useState([]);
   const { userDetails, setUserDetails } = useContext(LoginContext);
+  const { globalLang, setGlobalLang } = useContext(LoginContext);
   const [sameProfile, setSameProfile] = useState(false);
   const [userBlogsExist, setUserBlogsExist] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -54,7 +54,7 @@ function Profile() {
     setLoading(true);
     let token = JSON.parse(localStorage.getItem("userToken"));
     const res = await getUserById(id, token);
-    const blogRes = await getAuthorBlogs(token);
+    const blogRes = await getAuthorBlogs(token, globalLang);
     if (blogRes.data.data.blogs.length != 0) {
       console.log(blogRes.data.data.blogs);
       setUserBlogs(blogRes.data.data.blogs);
@@ -73,7 +73,6 @@ function Profile() {
 
   return (
     <>
-      <Navbar />
       {/* <div>
         <Modal
           open={open}

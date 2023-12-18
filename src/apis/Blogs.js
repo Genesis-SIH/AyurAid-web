@@ -1,5 +1,6 @@
 import axios from "axios";
-const url = "https://ayuraid.onrender.com/api";
+const url = "https://ayuraid-backend.cyclic.app/api";
+
 export const addBlog = async (data, token) => {
   try {
     console.log(data);
@@ -10,28 +11,28 @@ export const addBlog = async (data, token) => {
     console.log(error);
   }
 };
-export const getAllBlogs = async (token) => {
+export const getAllBlogs = async (token, Lang) => {
   try {
     return await axios.get(`${url}/blog/allBlogs`, {
-      headers: { Token: token, Lang: "en" },
+      headers: { Token: token, Lang: Lang },
     });
   } catch (error) {
     console.log(error);
   }
 };
-export const getBlogById = async (token, id) => {
+export const getBlogById = async (token, id, Lang) => {
   try {
     return await axios.get(`${url}/blog/blog/${id.id}`, {
-      headers: { Token: token, Lang: "en" },
+      headers: { Token: token, Lang: Lang },
     });
   } catch (error) {
     console.log(error);
   }
 };
-export const getAuthorBlogs = async (token) => {
+export const getAuthorBlogs = async (token, Lang) => {
   try {
     return await axios.get(`${url}/blog/blogs`, {
-      headers: { Token: token, Lang: "en" },
+      headers: { Token: token, Lang: Lang },
     });
   } catch (error) {
     console.log(error);
