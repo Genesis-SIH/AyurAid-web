@@ -13,8 +13,10 @@ import { LoginContext } from "../../utils/contextProvider/Context";
 import logo from "../../assets/ayuraid.png";
 import defaultimage from "../../assets/defaultprofile.png";
 import axios from "axios";
+import Select from "react-dropdown-select";
 function Navbar(props) {
   const [sidebar, setSidebar] = useState(false);
+  const [lang, setLang] = useState("English");
   const { userDetails, setUserDetails } = useContext(LoginContext);
   const [loginPage, setLoginPage] = useState(false);
   const pageRoute = useNavigate();
@@ -31,6 +33,29 @@ function Navbar(props) {
     }
   };
 
+  const options = [
+    {
+      value: 1,
+      label: "English",
+    },
+    {
+      value: 2,
+      label: "Hindi",
+    },
+    {
+      value: 3,
+      label: "Tamil",
+    },
+    {
+      value: 4,
+      label: "Marathi",
+    },
+    {
+      value: 5,
+      label: "German",
+    },
+  ];
+
   useEffect(() => {
     let token = JSON.parse(localStorage.getItem("userToken"));
     let loginData = JSON.parse(localStorage.getItem("loginData"));
@@ -39,6 +64,10 @@ function Navbar(props) {
       setUserDetails(data.data.data.userDetails);
     });
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("Lang", JSON.stringify(lang[0].label));
+  }, [lang]);
 
   const homeValid = async () => {
     // let token = localStorage.getItem("JWTFINALTOKEN")
@@ -61,6 +90,12 @@ function Navbar(props) {
           <a href="/">
             <img className="logo" src={logo} alt="" />
           </a>
+          <Select
+            options={options}
+            onChange={(values) => setLang(values)}
+            style={{ color: "black" }}
+            placeholder={lang}
+          />
         </div>
         <div></div>
         <nav

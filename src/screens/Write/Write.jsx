@@ -48,10 +48,8 @@ function Write() {
 
   const handlePublish = async (e) => {
     e.preventDefault();
-    let userDataString = localStorage.getItem("userCred");
-    let userData = JSON.parse(userDataString);
-    console.log(post);
-    const res = await addBlog(post, userData.data.token);
+    let userToken = JSON.parse(localStorage.getItem("userToken"));
+    const res = await addBlog(post, userToken);
     console.log(res);
   };
 
