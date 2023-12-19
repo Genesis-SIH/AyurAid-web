@@ -11,6 +11,7 @@ import { LoginContext } from "../../utils/contextProvider/Context";
 const Login = () => {
   const [isOpened, setIsOpened] = useState(false);
   const { userDetails, setUserDetails } = useContext(LoginContext);
+  const { langGlobal, setLangGlobal } = useContext(LoginContext);
   const [loginData, setloginData] = useState({
     identity: "",
     password: "",
@@ -44,6 +45,10 @@ const Login = () => {
       });
     });
   };
+
+  useEffect(() => {
+    localStorage.setItem("globalLang", JSON.stringify("English"));
+  }, []);
 
   return (
     <div>

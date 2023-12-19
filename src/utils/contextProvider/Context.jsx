@@ -5,10 +5,11 @@ export const LoginContext = createContext("");
 
 function Context({ children }) {
   const [userDetails, setUserDetails] = useState("");
+  console.log(localStorage.getItem("globalLang"));
   const [langGlobal, setLangGlobal] = useState(
-    localStorage.getItem("globalLang") == undefined
-      ? "English"
-      : JSON.parse(localStorage.getItem("globalLang"))
+    localStorage.getItem("globalLang")
+      ? JSON.parse(localStorage.getItem("globalLang"))
+      : "English"
   );
   return (
     <LoginContext.Provider
