@@ -97,7 +97,7 @@ function Blog() {
   useEffect(() => {
     getBlog();
     getRecent();
-    userDetails.bookmarks?.map((e) => {
+    userDetails?.bookmarks?.map((e) => {
       if (e === blog._id) {
         setBookmark(true);
       } else {

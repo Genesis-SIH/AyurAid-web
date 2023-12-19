@@ -49,7 +49,7 @@ function Profile() {
   const url = "http://localhost:8000";
   const nav = useNavigate();
   const { id } = useParams();
-  const userId = userDetails.id;
+  const userId = userDetails?.id;
   const getUserData = async () => {
     setLoading(true);
     let token = JSON.parse(localStorage.getItem("userToken"));
@@ -262,8 +262,8 @@ function Profile() {
             <img
               className="profile-image"
               src={
-                userDetails.profileImage
-                  ? `data:image/jpeg;base64,${userDetails.profileImage}`
+                userDetails?.profileImage
+                  ? `data:image/jpeg;base64,${userDetails?.profileImage}`
                   : defaultprofile
               }
               alt=""
@@ -271,7 +271,7 @@ function Profile() {
           </button>
           <div className="profile-info">
             <div className="follow-flex">
-              <h3 className="profile-name">{userDetails.username}</h3>
+              <h3 className="profile-name">{userDetails?.username}</h3>
               {/* {user._id === userDetails._id ? (
                 <a href={`/edit/${user._id} `}>
                   {" "}

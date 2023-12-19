@@ -16,8 +16,8 @@ function ShortBlogs(props) {
   const getBlogs = async () => {
     setLoading(true);
     let userToken = localStorage.getItem("userToken");
-    if(userToken){
-
+    console.log(langGlobal, "hi")
+    if (userToken) {
       let res = await getAllBlogs(JSON.parse(userToken), langGlobal);
       setBlogs(res.data.data.allBlogs);
     }
@@ -136,28 +136,19 @@ export function RightSection() {
                   style={{ paddingRight: "80px" }}
                 >
                   <a href={`/tag/Travel`}>
-                    <button className="tag">Travel</button>
+                    <button className="tag">Immunity</button>
                   </a>
                   <a href={`/tag/Lifestyle`}>
-                    <button className="tag">Lifestyle</button>
-                  </a>
-                  <a href={`/tag/Fashion`}>
-                    <button className="tag">Fashion</button>
-                  </a>
-                  <a href={`/tag/Technology`}>
-                    <button className="tag">Technology</button>
-                  </a>
-                  <a href={`/tag/Business`}>
-                    <button className="tag">Business</button>
-                  </a>
-                  <a href={`/tag/Health`}>
                     <button className="tag">Health</button>
                   </a>
-                  <a href={`/tag/Javascript`}>
-                    <button className="tag">Javascript</button>
+                  <a href={`/tag/Fashion`}>
+                    <button className="tag">Heart</button>
                   </a>
-                  <a href={`/tag/Blockchain`}>
-                    <button className="tag">Blockchain</button>
+                  <a href={`/tag/Technology`}>
+                    <button className="tag">Drugs</button>
+                  </a>
+                  <a href={`/tag/Business`}>
+                    <button className="tag">Ayurved</button>
                   </a>
                 </div>
               </div>
@@ -177,10 +168,9 @@ function Home() {
   const pageRoute = useNavigate();
 
   const getBlogs = async () => {
-
     setLoading(true);
     let userToken = localStorage.getItem("userToken");
-    console.log("Hello", langGlobal)
+    console.log(langGlobal, "hi")
     let res = await getAllBlogs(JSON.parse(userToken), langGlobal);
     console.log(res);
     setAllBlogs(res.data.data.allBlogs, langGlobal);
@@ -188,14 +178,12 @@ function Home() {
   };
 
   useEffect(() => {
-      if (!localStorage.getItem("loginData")) {
+    if (!localStorage.getItem("loginData")) {
       pageRoute("/login");
     }
 
-
     let token = JSON.parse(localStorage.getItem("userToken"));
-    if(token) {
-
+    if (token) {
       let loginData = JSON.parse(localStorage.getItem("loginData"));
       getUserById(loginData.id, token, langGlobal).then((data) => {
         console.log(data.data.data.userDetails);

@@ -5,12 +5,7 @@ export const LoginContext = createContext("");
 
 function Context({ children }) {
   const [userDetails, setUserDetails] = useState(null);
-  const [langGlobal, setLangGlobal] = useState(
-    localStorage.getItem("globalLang")
-      ? localStorage.getItem("globalLang")
-      : 
-      "English"
-  );
+  const [langGlobal, setLangGlobal] = useState("English");
   return (
     <LoginContext.Provider
       value={{ userDetails, setUserDetails, langGlobal, setLangGlobal }}
