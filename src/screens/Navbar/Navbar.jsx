@@ -5,26 +5,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import "./Navbar.css";
 import { IconContext } from "react-icons";
-import { ImCross } from "react-icons/im";
-import image from "../../assets/test.jpg";
-import { getAllBlogs } from "../../apis/Blogs";
 import { getUserById } from "../../apis/users";
 import { LoginContext } from "../../utils/contextProvider/Context";
 import logo from "../../assets/ayuraid.png";
-import defaultimage from "../../assets/defaultprofile.png";
-import axios from "axios";
 import Select from "react-dropdown-select";
-function Navbar(props) {
-  // useEffect(()=>{
-  //   setShowNav(false);
-  // }, [showNav])
-
+function Navbar() {
   const [sidebar, setSidebar] = useState(false);
   const [showNav, setShowNav] = useState(true);
   const [lang, setLang] = useState("English");
   const { userDetails, setUserDetails } = useContext(LoginContext);
   const { langGlobal, setLangGlobal } = useContext(LoginContext);
-  const [loginPage, setLoginPage] = useState(false);
   const pageRoute = useNavigate();
   const showSidebar = () => setSidebar(!sidebar);
 
@@ -45,12 +35,12 @@ function Navbar(props) {
       value: 3,
       label: "Tamil",
     },
-    // {
-    //   value: 4,
-    //   label: "Marathi",
-    // },
     {
       value: 4,
+      label: "Marathi",
+    },
+    {
+      value: 5,
       label: "German",
     },
   ];
@@ -77,6 +67,8 @@ function Navbar(props) {
       setLangGlobal("ta");
     } else if (lang[0].label == "German") {
       setLangGlobal("de");
+    } else if (lang[0].label == "Marathi") {
+      setLangGlobal("mr");
     }
   }, [lang]);
 
@@ -87,17 +79,6 @@ function Navbar(props) {
       setShowNav(true);
     }
   }, [window.location.pathname]);
-
-  const homeValid = async () => {
-    // let token = localStorage.getItem("JWTFINALTOKEN")
-    // const res = await axios.get("http://localhost:8000/validuser", { headers: { "Authorization": token } })
-    // if (res.data.status === 401 || !res.data.status) {
-    //   // pageRoute('/login')
-    // }
-    // else {
-    //   setLoginData(res.data.userValid)
-    // }
-  };
 
   return showNav && userDetails != null ? (
     <div id="myNav">

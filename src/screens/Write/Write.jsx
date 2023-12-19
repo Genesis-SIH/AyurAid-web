@@ -5,6 +5,7 @@ import "./Write.css";
 import "react-quill/dist/quill.snow.css";
 import Navbar from "../Navbar/Navbar";
 import { addBlog } from "../../apis/Blogs";
+import { searchAI } from "../../apis/AI";
 import { useContext } from "react";
 import { useRef } from "react";
 import { postBlog } from "../../apis/Blogs";
@@ -16,6 +17,7 @@ import { LoginContext } from "../../utils/contextProvider/Context";
 
 function Write() {
   const { loginData, setLoginData } = useContext(LoginContext);
+  const [aiResponse, setAiResponse] = useState("");
 
   const [post, setPost] = useState({
     title: "",
@@ -23,6 +25,7 @@ function Write() {
     description: "",
     tag: "",
   });
+  const [AI, setAI] = useState({ prompt: "" });
 
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -53,10 +56,18 @@ function Write() {
     console.log(res);
   };
 
+  const handleAI = async () => {
+    const res = await searchAI(AI);
+    console.log(res);
+    setAiResponse(AI.prompt); // Assuming the response is in res.data
+  };
+
   return (
     <>
-      <div className="container mt-5">
-        <form>
+      <div className="container mt-5" style={{ display: "flex" }}>
+        <form
+          style={{ width: "60vw", margin: "25px", border: "1px black solid" }}
+        >
           <input
             onChange={(e) => setPost({ ...post, title: e.target.value })}
             className="inputs"
@@ -76,6 +87,7 @@ function Write() {
               />
             </div>
           </button>
+
           <ReactQuill
             id="editor"
             modules={Write.modules}
@@ -86,6 +98,7 @@ function Write() {
             placeholder="Start Writing From here"
             style={{ marginTop: "-14px", color: "black" }}
           />
+
           <div className="write-flex">
             <div>
               <input
@@ -95,6 +108,7 @@ function Write() {
                 name="category"
                 placeholder="Enter category"
                 required
+                style={{ fontSize: "15px" }}
               />
               <small class="form-text text-muted thumbnailMessage mb-3">
                 Eg: Technology
@@ -108,6 +122,41 @@ function Write() {
             Publish
           </button>
         </form>
+        <div
+          style={{
+            flexDirection: "row",
+            width: "35vw",
+            paddingTop: "20px",
+          }}
+        >
+          {/* <div style={{ color: "black", fontSize: "30px", fontWeight:"600" }}>Ask AI</div> */}
+          <input
+            onChange={(e) => setAI({ prompt: e.target.value })}
+            className="inputs"
+            type="text"
+            placeholder="Search"
+            value=""
+          />
+          <button
+            onClick={handleAI}
+            style={{
+              width: "100%",
+              height: "40px",
+              borderRadius: "10px",
+              borderWidth: "2px",
+              borderColor: "black",
+              fontSize: "20px",
+              backgroundColor: "rgba(232, 243, 243, 1)",
+            }}
+          >
+            Ask AI
+          </button>
+          {aiResponse && (
+            <div className="ai-response" style={{ textOverflow: "ellipsis" }}>
+              {aiResponse}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

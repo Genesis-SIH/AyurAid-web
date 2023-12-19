@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
 import "./editprofile.css"
-
 import { updateUser, getUserById } from '../../apis/users'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import FileBase64 from 'react-file-base64';
 import { useRef } from 'react'
-import Stack from '@mui/material/Stack';
-import CircularProgress from '@mui/material/CircularProgress';
 import Navbar from '../Navbar/Navbar'
 import loadingAnimation from "../../assets/loading.gif"
 
