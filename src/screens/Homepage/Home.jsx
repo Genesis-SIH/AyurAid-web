@@ -16,8 +16,11 @@ function ShortBlogs(props) {
   const getBlogs = async () => {
     setLoading(true);
     let userToken = localStorage.getItem("userToken");
-    let res = await getAllBlogs(JSON.parse(userToken), langGlobal);
-    setBlogs(res.data.data.allBlogs);
+    if(userToken){
+
+      let res = await getAllBlogs(JSON.parse(userToken), langGlobal);
+      setBlogs(res.data.data.allBlogs);
+    }
     setLoading(false);
   };
   useEffect(() => {
@@ -169,29 +172,37 @@ function Home() {
   const [allBlogs, setAllBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const { userDetails, setUserDetails } = useContext(LoginContext);
+
   const { langGlobal, setLangGlobal } = useContext(LoginContext);
   const pageRoute = useNavigate();
 
   const getBlogs = async () => {
-    if (!localStorage.getItem("loginData")) {
-      pageRoute("/login");
-    }
+
     setLoading(true);
     let userToken = localStorage.getItem("userToken");
+    console.log("Hello", langGlobal)
     let res = await getAllBlogs(JSON.parse(userToken), langGlobal);
     console.log(res);
-    setAllBlogs(res.data.data.allBlogs);
+    setAllBlogs(res.data.data.allBlogs, langGlobal);
     setLoading(false);
   };
 
   useEffect(() => {
+      if (!localStorage.getItem("loginData")) {
+      pageRoute("/login");
+    }
+
+
     let token = JSON.parse(localStorage.getItem("userToken"));
-    let loginData = JSON.parse(localStorage.getItem("loginData"));
-    getUserById(loginData.id, token, langGlobal).then((data) => {
-      console.log(data.data.data.userDetails);
-      setUserDetails(data.data.data.userDetails);
-    });
-    getBlogs();
+    if(token) {
+
+      let loginData = JSON.parse(localStorage.getItem("loginData"));
+      getUserById(loginData.id, token, langGlobal).then((data) => {
+        console.log(data.data.data.userDetails);
+        setUserDetails(data.data.data.userDetails);
+      });
+      getBlogs();
+    }
     console.log(langGlobal);
   }, [langGlobal]);
 

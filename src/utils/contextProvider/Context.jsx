@@ -4,12 +4,12 @@ import { createContext } from "react";
 export const LoginContext = createContext("");
 
 function Context({ children }) {
-  const [userDetails, setUserDetails] = useState("");
-  console.log(localStorage.getItem("globalLang"));
+  const [userDetails, setUserDetails] = useState(null);
   const [langGlobal, setLangGlobal] = useState(
     localStorage.getItem("globalLang")
-      ? JSON.parse(localStorage.getItem("globalLang"))
-      : "English"
+      ? localStorage.getItem("globalLang")
+      : 
+      "English"
   );
   return (
     <LoginContext.Provider

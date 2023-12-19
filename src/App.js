@@ -18,7 +18,7 @@ import Login from "./screens/auth/login";
 function App() {
   return (
     <Router>
-      {window?.location?.pathname == "/login" ? <></> : <Navbar />}
+      <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />

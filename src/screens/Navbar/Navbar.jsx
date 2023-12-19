@@ -16,10 +16,14 @@ import axios from "axios";
 import Select from "react-dropdown-select";
 function Navbar(props) {
   useEffect(() => {
-    if (window?.location?.pathname == "/login") {
+    if (window.location.pathname == "/login") {
       setShowNav(false);
     }
-  }, [window?.location?.pathname]);
+  }, [window.location.pathname]);
+  
+  // useEffect(()=>{
+  //   setShowNav(false);
+  // }, [showNav])
 
   const [sidebar, setSidebar] = useState(false);
   const [showNav, setShowNav] = useState(true);
@@ -58,12 +62,17 @@ function Navbar(props) {
   ];
 
   useEffect(() => {
+   
     let token = JSON.parse(localStorage.getItem("userToken"));
     let loginData = JSON.parse(localStorage.getItem("loginData"));
-    getUserById(loginData.id, token).then((data) => {
+
+    if(token){
+      getUserById(loginData.id, token).then((data) => {
       console.log(data.data.data.userDetails);
       setUserDetails(data.data.data.userDetails);
     });
+    }
+   
   }, []);
 
   useEffect(() => {
@@ -94,7 +103,9 @@ function Navbar(props) {
   };
 
   return (
-    showNav && (
+    showNav && 
+    userDetails!=null ?
+    (
       <div id="myNav">
         <IconContext.Provider value={{ color: "rgba(51, 51, 51, 1)" }}>
           <div className="main-navbar">
@@ -172,6 +183,7 @@ function Navbar(props) {
         </IconContext.Provider>
       </div>
     )
+    :<></>
   );
 }
 
