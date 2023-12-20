@@ -7,8 +7,8 @@ import ayur from "../../assets/ayur.png";
 import { loginUser, getUserById } from "../../apis/users";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../utils/contextProvider/Context";
-import cirLoading from "../../assets/circularLoading.gif";
-import loadingAnimation from "../../assets/loading.gif";
+import Lottie from "react-lottie";
+import animationData from "../../assets/leafLoading.json";
 
 const Login = () => {
   const [isOpened, setIsOpened] = useState(false);
@@ -52,19 +52,25 @@ const Login = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem("globalLang", "English");
+    localStorage.setItem("globalLang", "en");
   }, []);
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   return loading ? (
-    <div className="loading-animation">
-      <div className="loading-div">
-        <img
-          style={{ width: "200px", height: "200px" }}
-          src={loadingAnimation}
-          alt=""
-        />
-      </div>
-    </div>
+    <Lottie
+      options={defaultOptions}
+      height={150}
+      width={150}
+      style={{ marginTop: "25vh" }}
+    />
   ) : (
     <div>
       <div className="scroll-down">

@@ -22,6 +22,8 @@ import { Link } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import loadingAnimation from "../../assets/loading.gif";
 import { LoginContext } from "../../utils/contextProvider/Context";
+import Lottie from "react-lottie";
+import animationData from "../../assets/leafLoading.json";
 
 const style = {
   position: "absolute",
@@ -70,6 +72,15 @@ function Profile() {
   useEffect(() => {
     getUserData();
   }, []);
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
   return (
     <>
@@ -241,38 +252,34 @@ function Profile() {
           </Box>
         </Modal>
       </div> */}
-      <div
-        style={{ display: loading ? "block" : "none" }}
-        className="loading-animation"
-      >
-        <div className="loading-div">
-          <img
-            style={{ width: "200px", height: "200px" }}
-            src={loadingAnimation}
-            alt=""
-          />
-        </div>
-      </div>
-      <div
-        style={{ display: loading ? "none" : "block" }}
-        className="profile-container"
-      >
-        <div className="profile-section">
-          <button style={{ userSelect: "none" }}>
-            <img
-              className="profile-image"
-              src={
-                userDetails?.profileImage
-                  ? userDetails?.profileImage
-                  : defaultprofile
-              }
-              alt=""
-            />
-          </button>
-          <div className="profile-info">
-            <div className="follow-flex">
-              <h3 className="profile-name">{userDetails?.username}</h3>
-              {/* {user._id === userDetails._id ? (
+      {loading ? (
+        <Lottie
+          options={defaultOptions}
+          height={150}
+          width={150}
+          style={{ position: "absolute", top: "40vh", left: "45vw" }}
+        />
+      ) : (
+        <div
+          style={{ display: loading ? "none" : "block" }}
+          className="profile-container"
+        >
+          <div className="profile-section">
+            <button style={{ userSelect: "none" }}>
+              <img
+                className="profile-image"
+                src={
+                  userDetails?.profileImage
+                    ? userDetails?.profileImage
+                    : defaultprofile
+                }
+                alt=""
+              />
+            </button>
+            <div className="profile-info">
+              <div className="follow-flex">
+                <h3 className="profile-name">{userDetails?.username}</h3>
+                {/* {user._id === userDetails._id ? (
                 <a href={`/edit/${user._id} `}>
                   {" "}
                   <button className="edit-btn mt-1">Edit</button>
@@ -308,8 +315,8 @@ function Profile() {
                   )}
                 </button>
               )} */}
-            </div>
-            {/* <div className="profile-update mt-2 mb-2">
+              </div>
+              {/* <div className="profile-update mt-2 mb-2">
               <button onClick={handleOpen2} className="followers">
                 {followers.length} Followers
               </button>
@@ -318,8 +325,8 @@ function Profile() {
               </button>
             </div> */}
 
-            {/* <p className="profile-description">{user.bio}</p> */}
-            {/* <div
+              {/* <p className="profile-description">{user.bio}</p> */}
+              {/* <div
               style={{
                 display:
                   user.instagram ||
@@ -363,9 +370,10 @@ function Profile() {
                 </a>
               </div>
             </div> */}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div style={{ display: loading ? "none" : "block" }} className="my-blogs">
         {userBlogsExist ? (
@@ -399,11 +407,7 @@ function Profile() {
                   <>
                     <a href={`/blog/${e._id}`}>
                       <div className="blog my-blog-single">
-                        <img
-                          className="blog-image"
-                          src={e.image}
-                          alt=""
-                        />
+                        <img className="blog-image" src={e.image} alt="" />
                         <p className="category my-blog-category">{e.tag}</p>
                         <h2
                           style={{ fontSize: "20px" }}

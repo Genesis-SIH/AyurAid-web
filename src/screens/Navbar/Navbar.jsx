@@ -15,6 +15,7 @@ function Navbar() {
   const [lang, setLang] = useState("English");
   const { userDetails, setUserDetails } = useContext(LoginContext);
   const { langGlobal, setLangGlobal } = useContext(LoginContext);
+  const { loading, setLoading } = useContext(LoginContext);
   const pageRoute = useNavigate();
   const showSidebar = () => setSidebar(!sidebar);
 
@@ -46,6 +47,7 @@ function Navbar() {
   ];
 
   useEffect(() => {
+    setLoading(true);
     let token = JSON.parse(localStorage.getItem("userToken"));
     let loginData = JSON.parse(localStorage.getItem("loginData"));
 
@@ -55,6 +57,7 @@ function Navbar() {
         setUserDetails(data.data.data.userDetails);
       });
     }
+    // setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -73,11 +76,13 @@ function Navbar() {
   }, [lang]);
 
   useEffect(() => {
+    setLoading(true);
     if (window.location.pathname == "/login") {
       setShowNav(false);
     } else {
       setShowNav(true);
     }
+    // setLoading(false);
   }, [window.location.pathname]);
 
   return showNav && userDetails != null ? (
