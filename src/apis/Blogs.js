@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://localhost:80/api";
+const url = "https://ayuraid-backend.cyclic.app";
 
 export const addBlog = async (data, token) => {
   try {

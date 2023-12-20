@@ -1,8 +1,8 @@
 import axios from "axios";
-const url = "http://localhost:8000";
+const url = "https://ayuraid-backend.cyclic.app";
 export const registerUser = async (body) => {
   try {
-    return await axios.post(`http://localhost:80/api/auth/signup`, body);
+    return await axios.post(`${url}/api/auth/signup`, body);
   } catch (error) {
     console.log("Error in registerUser api");
   }
@@ -10,7 +10,7 @@ export const registerUser = async (body) => {
 
 export const loginUser = async (data) => {
   try {
-    return await axios.post(`http://localhost:80/api/auth/login`, data, {
+    return await axios.post(`${url}/api/auth/login`, data, {
       withCredentials: true,
     });
   } catch (error) {
@@ -19,7 +19,7 @@ export const loginUser = async (data) => {
 };
 export const getUserById = async (id, token) => {
   try {
-    return await axios.get(`http://localhost:80/api/user/user/${id}`, {
+    return await axios.get(`${url}/api/user/user/${id}`, {
       headers: { Token: token },
     });
   } catch (error) {
