@@ -7,10 +7,13 @@ import ayur from "../../assets/ayur.png";
 import { loginUser, getUserById } from "../../apis/users";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../utils/contextProvider/Context";
+import cirLoading from "../../assets/circularLoading.gif";
+import loadingAnimation from "../../assets/loading.gif";
 
 const Login = () => {
   const [isOpened, setIsOpened] = useState(false);
   const [signUpZ, setSignUpZ] = useState(1);
+  const [loading, setLoading] = useState(false);
   const { userDetails, setUserDetails } = useContext(LoginContext);
   const { langGlobal, setLangGlobal } = useContext(LoginContext);
   const [loginData, setloginData] = useState({
@@ -36,6 +39,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     // console.log(loginData);
+    setLoading(true);
     await loginUser(loginData).then((data) => {
       localStorage.setItem("userToken", JSON.stringify(data.data.data.token));
       localStorage.setItem("loginData", JSON.stringify(data.data.data));
@@ -44,13 +48,24 @@ const Login = () => {
         nav("/");
       });
     });
+    setLoading(false);
   };
 
   useEffect(() => {
     localStorage.setItem("globalLang", "English");
   }, []);
 
-  return (
+  return loading ? (
+    <div className="loading-animation">
+      <div className="loading-div">
+        <img
+          style={{ width: "200px", height: "200px" }}
+          src={loadingAnimation}
+          alt=""
+        />
+      </div>
+    </div>
+  ) : (
     <div>
       <div className="scroll-down">
         <div className="text-column">

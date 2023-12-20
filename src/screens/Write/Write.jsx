@@ -73,7 +73,7 @@ function Write() {
       description: post.description.concat(
         " ",
         aiResponse,
-        "/n Powered by AyurAid AI"
+        ":- Powered by AyurAid AI"
       ),
     });
   };
