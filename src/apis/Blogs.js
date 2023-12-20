@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://localhost:4000/api";
+const url = "http://localhost:80/api";
 
 export const addBlog = async (data, token) => {
   try {

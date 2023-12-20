@@ -14,10 +14,12 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { LoginContext } from "../../utils/contextProvider/Context";
+import cirLoading from "../../assets/circularLoading.gif";
 
 function Write() {
   const { loginData, setLoginData } = useContext(LoginContext);
   const [aiResponse, setAiResponse] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [post, setPost] = useState({
     title: "",
@@ -57,9 +59,23 @@ function Write() {
   };
 
   const handleAI = async () => {
-    const res = await searchAI(AI);
-    console.log(res);
-    setAiResponse(AI.prompt); // Assuming the response is in res.data
+    if (AI != "") {
+      setLoading(true);
+      const res = await searchAI(AI);
+      setAiResponse(res.data.answer);
+      setLoading(false);
+    }
+  };
+
+  const handleCopy = () => {
+    setPost({
+      ...post,
+      description: post.description.concat(
+        " ",
+        aiResponse,
+        "/n Powered by AyurAid AI"
+      ),
+    });
   };
 
   return (
@@ -129,13 +145,11 @@ function Write() {
             paddingTop: "20px",
           }}
         >
-          {/* <div style={{ color: "black", fontSize: "30px", fontWeight:"600" }}>Ask AI</div> */}
           <input
             onChange={(e) => setAI({ prompt: e.target.value })}
             className="inputs"
             type="text"
             placeholder="Search"
-            value=""
           />
           <button
             onClick={handleAI}
@@ -151,11 +165,34 @@ function Write() {
           >
             Ask AI
           </button>
-          {aiResponse && (
-            <div className="ai-response" style={{ textOverflow: "ellipsis" }}>
-              {aiResponse}
-            </div>
+          {loading ? (
+            <img
+              src={cirLoading}
+              style={{ width: "25px", marginLeft: "16vw", marginTop: "100px" }}
+            ></img>
+          ) : (
+            aiResponse && (
+              <div className="ai-response" style={{ textOverflow: "ellipsis" }}>
+                {aiResponse}
+              </div>
+            )
           )}
+          <button
+            style={{
+              width: "20%",
+              marginLeft: "80%",
+              marginTop: "20px",
+              height: "40px",
+              borderRadius: "10px",
+              borderWidth: "2px",
+              borderColor: "black",
+              fontSize: "20px",
+              backgroundColor: "rgba(232, 243, 243, 1)",
+            }}
+            onClick={handleCopy}
+          >
+            Copy
+          </button>
         </div>
       </div>
     </>
