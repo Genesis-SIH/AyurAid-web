@@ -117,7 +117,7 @@ function Navbar() {
               <div className="profileSection">
                 <img
                   className="userProfile"
-                  src={`data:image/jpeg;base64,${userDetails.profileImage}`}
+                  src={userDetails.profileImage}
                   alt=""
                 />
                 <div className="user-bio">

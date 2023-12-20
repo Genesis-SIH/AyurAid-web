@@ -263,7 +263,7 @@ function Profile() {
               className="profile-image"
               src={
                 userDetails?.profileImage
-                  ? `data:image/jpeg;base64,${userDetails?.profileImage}`
+                  ? userDetails?.profileImage
                   : defaultprofile
               }
               alt=""
@@ -401,7 +401,7 @@ function Profile() {
                       <div className="blog my-blog-single">
                         <img
                           className="blog-image"
-                          src={`data:image/jpeg;base64,${e.image}`}
+                          src={e.image}
                           alt=""
                         />
                         <p className="category my-blog-category">{e.tag}</p>
@@ -415,7 +415,7 @@ function Profile() {
                           <div className="publishdate">
                             <img
                               className="author-image"
-                              src={`data:image/jpeg;base64,${e.authorImage}`}
+                              src={e.authorImage}
                               alt=""
                             />
                             &nbsp;{e.authorName}

@@ -72,7 +72,7 @@ function Blog() {
                   <a href={`/profile/${blog.authorid}`}>
                     <img
                       className="author-image single-blog-author"
-                      src={`data:image/jpeg;base64,${blog.authorImage}`}
+                      src={blog.authorImage}
                       alt=""
                       style={{ height: "50px", width: "auto" }}
                     />
@@ -163,7 +163,7 @@ function Blog() {
                 <h3 className="single-blog-title">{blog.title}</h3>
                 <img
                   className="single-blog-image"
-                  src={`data:image/jpeg;base64,${blog.image}`}
+                  src={blog.image}
                   alt=""
                 />
                 <div
@@ -243,7 +243,7 @@ function Blog() {
                                 <div className="minor-info pt-2 mb-0">
                                   <img
                                     className="author-image"
-                                    src={`data:image/jpeg;base64,${e.authorImage}`}
+                                    src={e.authorImage}
                                     alt=""
                                   />
                                   &nbsp;
