@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "https://ayuraid-backend.cyclic.app";
+const url = "https://backend2114.azurewebsites.net";
 export const registerUser = async (body) => {
   try {
     return await axios.post(`${url}/api/auth/signup`, body);
