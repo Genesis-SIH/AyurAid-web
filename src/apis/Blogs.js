@@ -1,5 +1,6 @@
 import axios from "axios";
-const url = "https://ayuraid-backend.cyclic.app/api";
+const url = "https://backend2114.azurewebsites.net/api";
+// const url = "http://localhost:80/api";
 
 export const addBlog = async (data, token) => {
   try {

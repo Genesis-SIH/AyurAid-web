@@ -1,5 +1,6 @@
 import axios from "axios";
-const url = "https://ayuraid-backend.cyclic.app";
+const url = "https://backend2114.azurewebsites.net";
+// const url = "http://localhost:80";
 export const registerUser = async (body) => {
   try {
     return await axios.post(`${url}/api/auth/signup`, body);
@@ -22,6 +23,13 @@ export const getUserById = async (id, token) => {
     return await axios.get(`${url}/api/user/user/${id}`, {
       headers: { Token: token },
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const verifyEmail = async (id) => {
+  try {
+    return await axios.post(`${url}/api/auth/emailVerification/${id}`);
   } catch (error) {
     console.log(error);
   }

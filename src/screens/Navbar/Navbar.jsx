@@ -53,7 +53,7 @@ function Navbar() {
 
     if (token) {
       getUserById(loginData.id, token).then((data) => {
-        console.log(data.data.data.userDetails);
+        // console.log(data.data.data.userDetails);
         setUserDetails(data.data.data.userDetails);
       });
     }
@@ -77,7 +77,10 @@ function Navbar() {
 
   useEffect(() => {
     setLoading(true);
-    if (window.location.pathname == "/login") {
+    if (
+      window.location.pathname == "/login" ||
+      window.location.pathname.split("/")[1] == "verifyEmail"
+    ) {
       setShowNav(false);
     } else {
       setShowNav(true);

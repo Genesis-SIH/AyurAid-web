@@ -14,6 +14,7 @@ import Share from "./screens/AdditionalPages/Share";
 import Error from "./screens/AdditionalPages/Error";
 import Home from "./screens/Homepage/Home";
 import Login from "./screens/auth/login";
+import VerifyEmail from "./screens/auth/verifyEmail";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route exact path="/share" element={<Share />} />
         <Route exact path="/edit/:id" element={<EditProfile />} />
         <Route exact path="/profile/:id" element={<Profile />} />
+        <Route exact path="/verifyEmail/:id" element={<VerifyEmail />} />
         <Route exact path="/bookmarks" element={<Bookmark />} />
         <Route exact path="/write" element={<Write />} />
 
